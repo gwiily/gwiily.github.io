@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Crazyflie2.0是一个多功能的飞速发展平台，它的重量只有27克，适合在你的手掌。其先进的功能，使得它非常适合开发人员和蓝牙低功耗（LE）功能，可以很容易地从移动设备飞行。由于其体积小，重量轻，这是非常适合室内使用，但也可以很容易上面盘旋你的房子，因为它可以在你的餐桌上徘徊。配件设计为无需焊接，只通过简单的连接到电机的电路板，就可以准备起飞了。 功能：  Durable design。耐用">
+<meta name="keywords" content="quadcoptor,crazyflie">
+<meta property="og:type" content="article">
+<meta property="og:title" content="crazyflie2.0介绍">
+<meta property="og:url" content="https://www.gwiily.com/posts/18942/index.html">
+<meta property="og:site_name" content="gwiily&#39;s blog">
+<meta property="og:description" content="Crazyflie2.0是一个多功能的飞速发展平台，它的重量只有27克，适合在你的手掌。其先进的功能，使得它非常适合开发人员和蓝牙低功耗（LE）功能，可以很容易地从移动设备飞行。由于其体积小，重量轻，这是非常适合室内使用，但也可以很容易上面盘旋你的房子，因为它可以在你的餐桌上徘徊。配件设计为无需焊接，只通过简单的连接到电机的电路板，就可以准备起飞了。 功能：  Durable design。耐用">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://op0ciozbn.bkt.clouddn.com/001aRpVkgy6OUHv4E32cc690.jpg">
+<meta property="og:updated_time" content="2017-09-05T14:15:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="crazyflie2.0介绍">
+<meta name="twitter:description" content="Crazyflie2.0是一个多功能的飞速发展平台，它的重量只有27克，适合在你的手掌。其先进的功能，使得它非常适合开发人员和蓝牙低功耗（LE）功能，可以很容易地从移动设备飞行。由于其体积小，重量轻，这是非常适合室内使用，但也可以很容易上面盘旋你的房子，因为它可以在你的餐桌上徘徊。配件设计为无需焊接，只通过简单的连接到电机的电路板，就可以准备起飞了。 功能：  Durable design。耐用">
+<meta name="twitter:image" content="http://op0ciozbn.bkt.clouddn.com/001aRpVkgy6OUHv4E32cc690.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.gwiily.com/posts/18942/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>crazyflie2.0介绍 | gwiily's blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">gwiily's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Stay hungry,Stay foolish</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/18942/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gwiily">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gwiily's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">crazyflie2.0介绍
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2015-11-29 17:43:25" itemprop="dateCreated datePublished" datetime="2015-11-29T17:43:25+08:00">2015-11-29</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2017-09-05 22:15:33" itemprop="dateModified" datetime="2017-09-05T22:15:33+08:00">2017-09-05</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Quadcopter/" itemprop="url" rel="index"><span itemprop="name">Quadcopter</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Quadcopter/Crazyflie-2-0/" itemprop="url" rel="index"><span itemprop="name">Crazyflie 2.0</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/18942/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/18942/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://op0ciozbn.bkt.clouddn.com/001aRpVkgy6OUHv4E32cc690.jpg" alt="001aRpVkgy6OUHv4E32cc690"></p>
+<p>Crazyflie2.0是一个多功能的飞速发展平台，它的重量只有27克，适合在你的手掌。其先进的功能，使得它非常适合开发人员和蓝牙低功耗（LE）功能，可以很容易地从移动设备飞行。由于其体积小，重量轻，这是非常适合室内使用，但也可以很容易上面盘旋你的房子，因为它可以在你的餐桌上徘徊。配件设计为无需焊接，只通过简单的连接到电机的电路板，就可以准备起飞了。</p>
+<p>功能：</p>
+<ul>
+<li>Durable design。耐用的设计。</li>
+<li>Easy assembly and no soldering required。简单的组装并不需要焊接。</li>
+<li>Supports expansion boards with automatic detection。支持扩展卡。</li>
+<li>Supports flying from iOS and Android with Bluetooth LE support as well as from Windows/MacOSX/Linux with the Crazyradio or Crazyradio PA。支持IOS,Android,蓝牙控制，以及使用Crazyradio在Windows/MacOSX/Linux上控制。</li>
+<li>Tested to above 1 km radio range line-of-sight (LOS) with Crazyradio PA。Crazyradio PA可以在1km范围内控制。</li>
+<li>Wireless firmware update。无线固件升级。</li>
+<li>On-board charging via standard uUSB。USB充电设计。</li>
+<li>Dual-MCU architecture with dedicated radio/power management SoC for advanced applications.双MCU设计，单独的电源管理芯片。</li>
+<li><p>Real-time logging, graphing, and setting of variables as well as full access to the available expansion boards with use of a Crazyradio or Crazyradio PA and a personal computer。实时记录日志，绘图，变量的设置。<br>crazyflie2.0的硬件规格</p>
+</li>
+<li><div class="li">Mechanical specification</div>
+
+<ul>
+<li><div class="li">Weight: 27g</div></li>
+<li><div class="li">Size (WxHxD): 92x92x29mm (motor-to-motor and including motor mount feet)</div>
+</li>
+</ul>
+</li>
+<li><div class="li">Radio specification</div>
+
+<ul>
+<li><div class="li">20 dBm radio amplifier tested to &gt; 1 km range LOS with Crazyradio PA</div></li>
+<li><div class="li">Bluetooth Low Energy support with iOS and Android clients available (tested on iOS 7.1+ and Android 4.4+)</div></li>
+<li><div class="li">Radio backwards compatible with original Crazyflie and Crazyradio</div>
+</li>
+</ul>
+</li>
+<li><div class="li">Micro-controllers</div>
+
+<ul>
+<li><div class="li">STM32F405 main application MCU (Cortex-M4, 168MHz, 192kb SRAM, 1Mb flash)</div></li>
+<li><div class="li">nRF51822 radio and power management MCU (Cortex-M0, 32Mhz, 16kb SRAM, 128kb flash)</div>
+</li>
+</ul>
+</li>
+<li><div class="li">uUSB connector</div>
+
+<ul>
+<li><div class="li">On-board LiPo charger with 100mA, 500mA and 980mA modes available</div></li>
+<li><div class="li">Full speed USB device interface</div></li>
+<li><div class="li">Partial USB OTG capability (USB OTG present but no 5V output)</div>
+</li>
+</ul>
+</li>
+<li><div class="li">IMU</div>
+
+<ul>
+<li><div class="li">3 axis gyro (MPU-9250)</div></li>
+<li><div class="li">3 axis accelerometer (MPU-9250)</div></li>
+<li><div class="li">3 axis magnetometer (MPU-9250)</div></li>
+<li><div class="li">High precision pressure sensor (LPS25H)</div>
+</li>
+</ul>
+</li>
+<li><div class="li">Flight specification</div>
+
+<ul>
+<li><div class="li">Flight time with stock battery: 7 minutes</div></li>
+<li><div class="li">Chraging time with stock battery: 40 minutes</div></li>
+<li><div class="li">Max recommended payload weight: 15 g</div>
+</li>
+</ul>
+</li>
+<li><div class="li">Expansion connector with</div>
+
+<ul>
+<li><div class="li">VCC (3.0V, max 100mA)</div></li>
+<li><div class="li">GND</div></li>
+<li><div class="li">VCOM (unregulated VBAT or VUSB, max 1A)</div></li>
+<li><div class="li">VUSB (both for input and output)</div></li>
+<li><div class="li">I2C (400kHz)</div></li>
+<li><div class="li">SPI</div></li>
+<li><div class="li">2 x UART</div></li>
+<li><div class="li">4 x GPIO/CS for SPI</div></li>
+<li><div class="li">1-wire bus for expansion identification</div></li>
+<li><div class="li">2 x GPIO connected to nRF51</div>
+</li>
+</ul>
+</li>
+<li><p><div class="li">8KB EEPROM</div><br>翻译：<a href="https://wiki.bitcraze.io/projects:crazyflie2:index" target="_blank" rel="noopener">https://wiki.bitcraze.io/projects:crazyflie2:index</a></p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/quadcoptor/" rel="tag"># quadcoptor</a>
+          
+            <a href="/tags/crazyflie/" rel="tag"># crazyflie</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/53711/" rel="next" title="在linux（UBUNTU14.04）中搭建PIXHAWK的仿真平台">
+                <i class="fa fa-chevron-left"></i> 在linux（UBUNTU14.04）中搭建PIXHAWK的仿真平台
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/62395/" rel="prev" title="crazyflie开发入门">
+                crazyflie开发入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpeg"
+                alt="gwiily" />
+            
+              <p class="site-author-name" itemprop="name">gwiily</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gwiily</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.3.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'EhlEO5zRsi1U0fMnqnVDkXPS-gzGzoHsz',
+        appKey: 'N1969uHW5tAaeGeD2cDBwhO4',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

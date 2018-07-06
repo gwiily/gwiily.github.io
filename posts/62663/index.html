@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="一、html插入图片：1&amp;lt;img src=&amp;quot;http://gwiily.com/logo.gif&amp;quot; width=&amp;quot;500&amp;quot; height=&amp;quot;100&amp;quot; /&amp;gt; 插入超链接：1&amp;lt;a href=&amp;quot;http://www.gwiily.com/index.htm&amp;quot;&amp;gt;此处是超链接的文本&amp;lt;/a&amp;gt; 插">
+<meta name="keywords" content="web,html,javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web安全学习笔记（一）- web基础知识">
+<meta property="og:url" content="https://www.gwiily.com/posts/62663/index.html">
+<meta property="og:site_name" content="gwiily&#39;s blog">
+<meta property="og:description" content="一、html插入图片：1&amp;lt;img src=&amp;quot;http://gwiily.com/logo.gif&amp;quot; width=&amp;quot;500&amp;quot; height=&amp;quot;100&amp;quot; /&amp;gt; 插入超链接：1&amp;lt;a href=&amp;quot;http://www.gwiily.com/index.htm&amp;quot;&amp;gt;此处是超链接的文本&amp;lt;/a&amp;gt; 插">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-09-09T16:00:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="web安全学习笔记（一）- web基础知识">
+<meta name="twitter:description" content="一、html插入图片：1&amp;lt;img src=&amp;quot;http://gwiily.com/logo.gif&amp;quot; width=&amp;quot;500&amp;quot; height=&amp;quot;100&amp;quot; /&amp;gt; 插入超链接：1&amp;lt;a href=&amp;quot;http://www.gwiily.com/index.htm&amp;quot;&amp;gt;此处是超链接的文本&amp;lt;/a&amp;gt; 插">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.gwiily.com/posts/62663/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>web安全学习笔记（一）- web基础知识 | gwiily's blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">gwiily's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Stay hungry,Stay foolish</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/62663/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gwiily">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gwiily's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">web安全学习笔记（一）- web基础知识
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2017-08-20 20:26:26" itemprop="dateCreated datePublished" datetime="2017-08-20T20:26:26+08:00">2017-08-20</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2017-09-10 00:00:19" itemprop="dateModified" datetime="2017-09-10T00:00:19+08:00">2017-09-10</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hacker/" itemprop="url" rel="index"><span itemprop="name">Hacker</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/62663/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/62663/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、html"><a href="#一、html" class="headerlink" title="一、html"></a>一、html</h1><p>插入图片：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=&quot;http://gwiily.com/logo.gif&quot; width=&quot;500&quot; height=&quot;100&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>插入超链接：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=&quot;http://www.gwiily.com/index.htm&quot;&gt;此处是超链接的文本&lt;/a&gt;</span><br></pre></td></tr></table></figure></p>
+<p>插入表单：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;form&gt;</span><br><span class="line">username: </span><br><span class="line">&lt;input type=&quot;text&quot; name=&quot;username&quot; /&gt;</span><br><span class="line">password:</span><br><span class="line">&lt;input type=&quot;password&quot; name=&quot;password&quot; /&gt;</span><br><span class="line">&lt;input type=&quot;submit&quot; value=&quot;Submit&quot; /&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+<p>嵌套网页：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe src=&quot;http://www.gwiily.com&quot; frameborder=&quot;0&quot; width=&quot;480&quot; height=&quot;240&quot;&gt;&lt;/iframe&gt;</span><br></pre></td></tr></table></figure></p>
+<p>插入表格：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">&lt;table border=1&gt;</span><br><span class="line">    &lt;tr&gt;</span><br><span class="line">      &lt;th style=&quot;width:10%&quot;&gt;结果&lt;/th&gt;</span><br><span class="line">      &lt;th style=&quot;width:50%&quot;&gt;描述&lt;/th&gt;</span><br><span class="line">      &lt;th style=&quot;width:20%&quot;&gt;实体名称&lt;/th&gt;</span><br><span class="line">      &lt;th style=&quot;width:20%&quot;&gt;实体编号&lt;/th&gt;</span><br><span class="line">    &lt;/tr&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;tr&gt;</span><br><span class="line">      &lt;td&gt;&amp;quot;&lt;/td&gt;</span><br><span class="line">      &lt;td&gt;quotation mark&lt;/td&gt;</span><br><span class="line">      &lt;td&gt;&amp;amp;quot;&lt;/td&gt;</span><br><span class="line">      &lt;td&gt;&amp;amp;#34;&lt;/td&gt;</span><br><span class="line">    &lt;/tr&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;tr&gt;</span><br><span class="line">      &lt;td&gt;&apos;&lt;/td&gt;</span><br><span class="line">      &lt;td&gt;apostrophe&amp;nbsp;&lt;/td&gt;</span><br><span class="line">      &lt;td&gt;&amp;amp;apos;&lt;/td&gt;</span><br><span class="line">      &lt;td&gt;&amp;amp;#39;&lt;/td&gt;</span><br><span class="line">    &lt;/tr&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;tr&gt;</span><br><span class="line">      &lt;td&gt;&amp;amp;&lt;/td&gt;</span><br><span class="line">      &lt;td&gt;ampersand&lt;/td&gt;</span><br><span class="line">      &lt;td&gt;&amp;amp;amp;&lt;/td&gt;</span><br><span class="line">      &lt;td&gt;&amp;amp;#38;&lt;/td&gt;</span><br><span class="line">    &lt;/tr&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;tr&gt;</span><br><span class="line">      &lt;td&gt;&amp;lt;&lt;/td&gt;</span><br><span class="line">      &lt;td&gt;less-than&lt;/td&gt;</span><br><span class="line">      &lt;td&gt;&amp;amp;lt;&lt;/td&gt;</span><br><span class="line">      &lt;td&gt;&amp;amp;#60;&lt;/td&gt;</span><br><span class="line">    &lt;/tr&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;tr&gt;</span><br><span class="line">      &lt;td&gt;&amp;#62;&lt;/td&gt;</span><br><span class="line">      &lt;td&gt;greater-than&lt;/td&gt;</span><br><span class="line">      &lt;td&gt;&amp;amp;gt;&lt;/td&gt;</span><br><span class="line">      &lt;td&gt;&amp;amp;#62;&lt;/td&gt;</span><br><span class="line">    &lt;/tr&gt;</span><br><span class="line">&lt;/table&gt;</span><br></pre></td></tr></table></figure></p>
+<h1 id="二、javascript"><a href="#二、javascript" class="headerlink" title="二、javascript"></a>二、javascript</h1><h2 id="2-1-DOM操作"><a href="#2-1-DOM操作" class="headerlink" title="2.1 DOM操作"></a>2.1 DOM操作</h2><p>获取元素内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">x=document.getElementById(&quot;intro&quot;);</span><br><span class="line">alert(&apos;id为intro元素的文本是：&apos;+x.innerHTML);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>写入内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">document.write(Date());</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>改变HTML内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">x=document.getElementById(&quot;intro&quot;);</span><br><span class="line">x.innerHTML=&quot;Javascript改变HTML内容!&quot;;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>点击后更改HTML内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function changetext(id)</span><br><span class="line">&#123;</span><br><span class="line">id.innerHTML=&quot;谢谢!&quot;;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;h1 onclick=&quot;changetext(this)&quot;&gt;请点击该文本&lt;/h1&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="2-2-BOM操作"><a href="#2-2-BOM操作" class="headerlink" title="2.2 BOM操作"></a>2.2 BOM操作</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">document.write(&apos;当前URL：&apos;+location.href);&lt;!-- 打印当前页面的URL --&gt;</span><br><span class="line">document.write(&apos;&lt;br&gt;当前user agent：&apos;+navigator.userAgent); &lt;!-- 打印当前的浏览器信息 --&gt;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;button onclick=&quot;window.open(&apos;https://www.gwiily.com&apos;)&quot;&gt;点我打开网页&lt;/button&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="三、sql"><a href="#三、sql" class="headerlink" title="三、sql"></a>三、sql</h1><p>数据库操作：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> gwiily; <span class="comment">/*创建名为gwiily的数据库*/</span></span><br><span class="line"><span class="keyword">show</span> <span class="keyword">databases</span>; <span class="comment">/*显示所有的数据库*/</span></span><br><span class="line"><span class="keyword">use</span> gwiily; <span class="comment">/*使用名为gwiily的数据库*/</span></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">DATABASE</span> gwiily; <span class="comment">/*删除名为gwiily的数据库*/</span></span><br></pre></td></tr></table></figure></p>
+<p>数据表操作：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> teacher(</span><br><span class="line">    <span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">4</span>) <span class="keyword">not</span> <span class="literal">null</span> primary <span class="keyword">key</span> auto_increment,</span><br><span class="line">    <span class="keyword">name</span> <span class="built_in">char</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">	sex  <span class="built_in">char</span>(<span class="number">10</span>) <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">	addr <span class="built_in">char</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="literal">null</span></span><br><span class="line">); <span class="comment">/*创建名为teacher的数据表*/</span></span><br><span class="line"><span class="keyword">show</span> <span class="keyword">tables</span>; <span class="comment">/*显示所有数据表*/</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*插入数据*/</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> teacher(<span class="keyword">name</span>,sex,addr) <span class="keyword">VALUES</span>(<span class="string">'Leo'</span>,<span class="string">'Male'</span>,<span class="string">'hangzhou'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> teacher(<span class="keyword">name</span>,sex,addr) <span class="keyword">VALUES</span>(<span class="string">'Able'</span>,<span class="string">'Male'</span>,<span class="string">'hangzhou'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> teacher(<span class="keyword">name</span>,sex,addr) <span class="keyword">VALUES</span>(<span class="string">'John'</span>,<span class="string">'Male'</span>,<span class="string">'beijing'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> teacher(<span class="keyword">name</span>,sex,addr) <span class="keyword">VALUES</span>(<span class="string">'Mary'</span>,<span class="string">'Female'</span>,<span class="string">'hangzhou'</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> teacher; <span class="comment">/*查询表teacher中的所有数据*/</span></span><br><span class="line">updata teacher <span class="keyword">set</span> <span class="keyword">name</span>=<span class="string">'ivan'</span> <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">1</span>; <span class="comment">/*修改id为1的name为ivan*/</span></span><br><span class="line">selete from teacher where name='ivan'; <span class="comment">/*删除名字为ivan的数据*/</span></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> teacher; <span class="comment">/*删除名为teacher的表单*/</span></span><br></pre></td></tr></table></figure>
+<p>导入数据库：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source C:/desktop/student.sql; <span class="comment">/*导入student数据库，注意斜杠方向*/</span></span><br></pre></td></tr></table></figure></p>
+<p>联合查询：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; select name from teacher where sex='male',</span><br><span class="line">&gt; union all,</span><br><span class="line">&gt; select name from student where sex='male',</span><br><span class="line">&gt; order by 1; </span><br><span class="line"><span class="comment">/*从teacher和student里找出全部的男性的‘name’，并默认排序。*/</span></span><br></pre></td></tr></table></figure></p>
+<p>SQL语句中3种注释的方法，在SQL注入中会涉及到该部分内容：</p>
+<ol>
+<li><code>#...</code></li>
+<li><code>/*...*/</code></li>
+<li><code>-- ....</code></li>
+</ol>
+<h1 id="四、php"><a href="#四、php" class="headerlink" title="四、php"></a>四、php</h1>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/web/" rel="tag"># web</a>
+          
+            <a href="/tags/html/" rel="tag"># html</a>
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/38558/" rel="next" title="mx master 1.0 使用感受">
+                <i class="fa fa-chevron-left"></i> mx master 1.0 使用感受
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/29926/" rel="prev" title="web安全学习笔记（二）- 搜索引擎语法">
+                web安全学习笔记（二）- 搜索引擎语法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpeg"
+                alt="gwiily" />
+            
+              <p class="site-author-name" itemprop="name">gwiily</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、html"><span class="nav-number">1.</span> <span class="nav-text">一、html</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、javascript"><span class="nav-number">2.</span> <span class="nav-text">二、javascript</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-DOM操作"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 DOM操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-BOM操作"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 BOM操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、sql"><span class="nav-number">3.</span> <span class="nav-text">三、sql</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、php"><span class="nav-number">4.</span> <span class="nav-text">四、php</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gwiily</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.3.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'EhlEO5zRsi1U0fMnqnVDkXPS-gzGzoHsz',
+        appKey: 'N1969uHW5tAaeGeD2cDBwhO4',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
