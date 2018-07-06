@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="翻译：https://wiki.bitcraze.io/projects:crazyflie2:architecture:index Crazyflie 2.0 硬件中主要包含两个微控制器： 一个NRF51，Cortex-M0，主要管理无线通信和电源管理：  逻辑开关 给系统的其他部分供电（STM32,传感器和扩展板） 电源充电管理和电压测量 Master radio bootloader（无线电">
+<meta name="keywords" content="crazyflie,STM32">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Crazyflie 2.0 系统结构">
+<meta property="og:url" content="https://www.gwiily.com/2015/12/02/Crazyflie 2.0 系统结构/index.html">
+<meta property="og:site_name" content="gwiily&#39;s blog">
+<meta property="og:description" content="翻译：https://wiki.bitcraze.io/projects:crazyflie2:architecture:index Crazyflie 2.0 硬件中主要包含两个微控制器： 一个NRF51，Cortex-M0，主要管理无线通信和电源管理：  逻辑开关 给系统的其他部分供电（STM32,传感器和扩展板） 电源充电管理和电压测量 Master radio bootloader（无线电">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://op0ciozbn.bkt.clouddn.com/mcu_architecture1-1024x662.png">
+<meta property="og:updated_time" content="2017-09-05T14:15:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Crazyflie 2.0 系统结构">
+<meta name="twitter:description" content="翻译：https://wiki.bitcraze.io/projects:crazyflie2:architecture:index Crazyflie 2.0 硬件中主要包含两个微控制器： 一个NRF51，Cortex-M0，主要管理无线通信和电源管理：  逻辑开关 给系统的其他部分供电（STM32,传感器和扩展板） 电源充电管理和电压测量 Master radio bootloader（无线电">
+<meta name="twitter:image" content="http://op0ciozbn.bkt.clouddn.com/mcu_architecture1-1024x662.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.gwiily.com/2015/12/02/Crazyflie 2.0 系统结构/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Crazyflie 2.0 系统结构 | gwiily's blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">gwiily's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Stay hungry,Stay foolish</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/2015/12/02/Crazyflie 2.0 系统结构/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gwiily">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gwiily's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Crazyflie 2.0 系统结构
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2015-12-02 11:34:29" itemprop="dateCreated datePublished" datetime="2015-12-02T11:34:29+08:00">2015-12-02</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2017-09-05 22:15:33" itemprop="dateModified" datetime="2017-09-05T22:15:33+08:00">2017-09-05</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Quadcopter/" itemprop="url" rel="index"><span itemprop="name">Quadcopter</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Quadcopter/Crazyflie-2-0/" itemprop="url" rel="index"><span itemprop="name">Crazyflie 2.0</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/12/02/Crazyflie 2.0 系统结构/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/2015/12/02/Crazyflie 2.0 系统结构/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>翻译：<a href="https://wiki.bitcraze.io/projects:crazyflie2:architecture:index" target="_blank" rel="noopener">https://wiki.bitcraze.io/projects:crazyflie2:architecture:index</a></p>
+<h1 id="Crazyflie-2-0-硬件中主要包含两个微控制器："><a href="#Crazyflie-2-0-硬件中主要包含两个微控制器：" class="headerlink" title="Crazyflie 2.0 硬件中主要包含两个微控制器："></a>Crazyflie 2.0 硬件中主要包含两个微控制器：</h1><ul>
+<li><p>一个NRF51，Cortex-M0，主要管理无线通信和电源管理：</p>
+<ul>
+<li>逻辑开关</li>
+<li>给系统的其他部分供电（STM32,传感器和扩展板）</li>
+<li>电源充电管理和电压测量</li>
+<li>Master radio bootloader（无线电主引导）</li>
+<li>无线电和蓝牙连接</li>
+<li>检测和检查已安装的扩展版</li>
+</ul>
+</li>
+<li><p>一个STM32F405，Cortex-M4@160MHz，负责主要的任务和飞行控制以及其他任务：</p>
+<ul>
+<li>传感器数据读取和电机控制</li>
+<li>飞行控制</li>
+<li>遥测（包括电池电压）</li>
+<li>其他用户开发的</li>
+</ul>
+</li>
+</ul>
+<p>下面这张图解释了crazyflie是如何工作的：</p>
+<p><img src="http://op0ciozbn.bkt.clouddn.com/mcu_architecture1-1024x662.png" alt="mcu_architecture1-1024x662"></p>
+<h1 id="nRF51822"><a href="#nRF51822" class="headerlink" title="nRF51822"></a>nRF51822</h1><p>nRF51的主要任务是负责无线电通信和电源管理，它其实是作为一个无限网桥（它将通信的原始数据发送给STM）</p>
+<p>Crazyflie 2.0 使用的无线电为CRTP和蓝牙，但是硬件还支持一些其他协议，例如ANT。CRTP模式和Crazyradio USB适配器兼容，并提供了2Mbit/s的数据链路。测试表明该无线电路的延迟是360us和1.26ms之间，在2Mbps的速率下可以传输1到32字节的无重复数据。使用蓝牙传输的最小延迟为7.5ms，目前执行的延迟为20ms。使用CRTP和Crazyradio传输的好处是它很容在支持USB 的书记中使用，使他成为首选的破解和实验使用的小型四旋翼。蓝牙传输可以在大多数移动设备上实现。</p>
+<p>nRF51芯片的另一个特殊性是，他是设计为使用纽扣电池供电的芯片，这意味着它可以很好的适用于低能量操作，所以它还负责电源管理。它处理着开/关逻辑，这意味着NRF51总是处于通电状态，当你长时间按下开/关按钮的时候可能会有不同的作用（这是用于启动引导程序的）。另外，它也可以允许从一个扩展口的pin针上唤醒一个外部电源。</p>
+<h1 id="STM32F405"><a href="#STM32F405" class="headerlink" title="STM32F405"></a>STM32F405</h1><p>该SMT32运行了主要固件。即使他是被NRF51引导，但它仍然可以控制NRF51。它实现了飞行控制和所有的通信算法。扩展端口主要连接在STM32上，扩展驱动板也是被连接在STM32上的。</p>
+<p>STM32F405有196kb的内存，这对所有开发者来说应该是足够的（著名的最后一句话…）。这对于飞行控制来说是绰绰有余的，但是它允许了更多的计算密集型的算法，比如，惯性传感器和GPS传感器数据的融合。</p>
+<h2 id="内部MCU通信"><a href="#内部MCU通信" class="headerlink" title="内部MCU通信"></a>内部MCU通信</h2><p>两个CPU之间的通信时通过符号连接协议处理，它是一个简单的基于分组的协议，这是我们提出的一种可扩展的通信方案。</p>
+<p>syslink提供了两颗CPU之间所有的请求信息，STM32是主CPU，而NRF51是从CPU，我们尽可能的让NRF51处理一些简单的任务，而STM32处理复杂的算法。</p>
+<p>SYSLINK消息举例：</p>
+<ul>
+<li>初始无限信号的发送和接受</li>
+<li>电源管理和测量</li>
+</ul>
+<p>上述如有错误，望指出，谢谢。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/crazyflie/" rel="tag"># crazyflie</a>
+          
+            <a href="/tags/STM32/" rel="tag"># STM32</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/12/01/crazyflie开发入门/" rel="next" title="crazyflie开发入门">
+                <i class="fa fa-chevron-left"></i> crazyflie开发入门
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/12/07/解决在使用OPENCV调用摄像头时的报错/" rel="prev" title="解决在使用OPENCV调用摄像头时的报错">
+                解决在使用OPENCV调用摄像头时的报错 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpeg"
+                alt="gwiily" />
+            
+              <p class="site-author-name" itemprop="name">gwiily</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Crazyflie-2-0-硬件中主要包含两个微控制器："><span class="nav-number">1.</span> <span class="nav-text">Crazyflie 2.0 硬件中主要包含两个微控制器：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nRF51822"><span class="nav-number">2.</span> <span class="nav-text">nRF51822</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#STM32F405"><span class="nav-number">3.</span> <span class="nav-text">STM32F405</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#内部MCU通信"><span class="nav-number">3.1.</span> <span class="nav-text">内部MCU通信</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gwiily</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.3.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'EhlEO5zRsi1U0fMnqnVDkXPS-gzGzoHsz',
+        appKey: 'N1969uHW5tAaeGeD2cDBwhO4',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

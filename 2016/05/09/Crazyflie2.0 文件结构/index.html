@@ -108,20 +108,25 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="gwiily&#39;s blog">
-<meta property="og:url" content="https://www.gwiily.com/archives/index.html">
+  <meta name="description" content="./              | 根目录，包含Makefile + init         | 主函数 + config       | 配置文件  + drivers      | 硬件驱动文件 |  + src       | 驱动文件源代码  |  + interface | 驱动文件头文件. Interface to the HAL layer + hal          | 硬件">
+<meta name="keywords" content="crazyflie,quadcoptor">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Crazyflie2.0 文件结构">
+<meta property="og:url" content="https://www.gwiily.com/2016/05/09/Crazyflie2.0 文件结构/index.html">
 <meta property="og:site_name" content="gwiily&#39;s blog">
+<meta property="og:description" content="./              | 根目录，包含Makefile + init         | 主函数 + config       | 配置文件  + drivers      | 硬件驱动文件 |  + src       | 驱动文件源代码  |  + interface | 驱动文件头文件. Interface to the HAL layer + hal          | 硬件">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-09-05T14:15:33.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="gwiily&#39;s blog">
+<meta name="twitter:title" content="Crazyflie2.0 文件结构">
+<meta name="twitter:description" content="./              | 根目录，包含Makefile + init         | 主函数 + config       | 配置文件  + drivers      | 硬件驱动文件 |  + src       | 驱动文件源代码  |  + interface | 驱动文件头文件. Interface to the HAL layer + hal          | 硬件">
 
 
 
 
 
 
-  <link rel="canonical" href="https://www.gwiily.com/archives/"/>
+  <link rel="canonical" href="https://www.gwiily.com/2016/05/09/Crazyflie2.0 文件结构/"/>
 
 
 
@@ -131,7 +136,7 @@
   };
 </script>
 
-  <title>Archive | gwiily's blog</title>
+  <title>Crazyflie2.0 文件结构 | gwiily's blog</title>
   
 
 
@@ -178,7 +183,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -243,7 +248,7 @@
         
         
           
-          <li class="menu-item menu-item-archives menu-item-active">
+          <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
   </li>
@@ -276,444 +281,280 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
 
-      
-      <span class="archive-page-counter">
-        
-        
-         
-        
-        OK! 32 posts in total. Keep on posting.
-      </span>
-      
+  
 
-      
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/2016/05/09/Crazyflie2.0 文件结构/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gwiily">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gwiily's blog">
+    </span>
+
+    
+      <header class="post-header">
 
         
         
+          <h1 class="post-title" itemprop="name headline">Crazyflie2.0 文件结构
+              
+            
+          </h1>
         
 
-        
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-05-09 11:22:19" itemprop="dateCreated datePublished" datetime="2016-05-09T11:22:19+08:00">2016-05-09</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2017-09-05 22:15:33" itemprop="dateModified" datetime="2017-09-05T22:15:33+08:00">2017-09-05</time>
+              
+            
+          </span>
+
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/20/web安全学习笔记（四） - 工具篇/" itemprop="url">
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
               
-                <span itemprop="name">web安全学习笔记（四） - 工具篇</span>
+                <span class="post-meta-item-text">In</span>
               
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-20T20:37:22+08:00"
-              content="2017-09-20" >
-          09-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/01/hexo-七牛云搭建博客实现全站https访问/" itemprop="url">
               
-                <span itemprop="name">hexo+七牛云搭建博客实现全站https访问</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Quadcopter/" itemprop="url" rel="index"><span itemprop="name">Quadcopter</span></a></span>
+
+                
+                
+                  , 
+                
               
-            </a>
-        
-      </h2>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Quadcopter/Crazyflie-2-0/" itemprop="url" rel="index"><span itemprop="name">Crazyflie 2.0</span></a></span>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-01T10:16:49+08:00"
-              content="2017-09-01" >
-          09-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/08/21/web安全学习笔记（三）- 常见web漏洞/" itemprop="url">
+                
+                
               
-                <span itemprop="name">web安全学习笔记（三）- 常见web漏洞</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-21T22:12:22+08:00"
-              content="2017-08-21" >
-          08-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/08/21/web安全学习笔记（二）- 搜索引擎语法/" itemprop="url">
-              
-                <span itemprop="name">web安全学习笔记（二）- 搜索引擎语法</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-21T21:10:55+08:00"
-              content="2017-08-21" >
-          08-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/08/20/web安全学习笔记（一）- web基础知识/" itemprop="url">
-              
-                <span itemprop="name">web安全学习笔记（一）- web基础知识</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-20T20:26:26+08:00"
-              content="2017-08-20" >
-          08-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/08/19/mx master 1.0 使用感受/" itemprop="url">
-              
-                <span itemprop="name">mx master 1.0 使用感受</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-19T22:58:32+08:00"
-              content="2017-08-19" >
-          08-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/06/13/基于UWB的飞行器协同飞行控制系统/" itemprop="url">
-              
-                <span itemprop="name">基于UWB的飞行器协同飞行控制系统</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-06-13T00:12:14+08:00"
-              content="2017-06-13" >
-          06-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/04/26/使用hexo配合github搭建个人博客/" itemprop="url">
-              
-                <span itemprop="name">使用hexo配合github搭建个人博客</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-04-26T18:58:18+08:00"
-              content="2017-04-26" >
-          04-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/01/05/总结一下loco positioning/" itemprop="url">
-              
-                <span itemprop="name">总结一下loco positioning</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-01-05T16:02:33+08:00"
-              content="2017-01-05" >
-          01-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2016">2016</h1>
-          </div>
-        
-        
 
-        
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/05/09/Crazyflie2.0 文件结构/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/2016/05/09/Crazyflie2.0 文件结构/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2016/09/28/PX4支持crazyflie2.0了/" itemprop="url">
-              
-                <span itemprop="name">PX4支持crazyflie2.0了</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-09-28T20:04:54+08:00"
-              content="2016-09-28" >
-          09-28
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+      
 
+      
+        <blockquote>
+<p>./              | 根目录，包含Makefile</p>
+<pre><code>+ init         | 主函数
++ config       | 配置文件 
++ drivers      | 硬件驱动文件
+|  + src       | 驱动文件源代码 
+|  + interface | 驱动文件头文件. Interface to the HAL layer
++ hal          | 硬件抽象层 
+|  + src       | HAL 源代码
+|  + interface | HAL 头文件及接口
++ modules      | 固件操作源码和头文件
+|  + src       | 固件子函数
+|  + interface | 头文件. 配置固件环境
++ utils        | 工具包代码. 实现诸如控制台的程序.
+|  + src       | 工具包源码
+|  + interface | 工具包头文件及接口
++ platform     | 固件的特殊文件，不一定被使用
++ tools        | 杂项. scripts for LD, OpenOCD, make, version control, ...
+|              | *** 这两个以下文件夹中包含未修改文件 ***
++ lib          | 库文件
+|  + FreeRTOS  | FreeRTOS 源码， 删除了不必要的问题
+|  + STM32...  | STM32的外围设备的库文件
+|  + CMSIS     | 核心抽象层
+</code></pre></blockquote>
+<blockquote>
+<p>./              | Root, contains the Makefile</p>
+<pre><code>+ init         | Contains the main.c
++ config       | Configuration files
++ drivers      | Hardware driver layer
+|  + src       | Drivers source code
+|  + interface | Drivers header files. Interface to the HAL layer
++ hal          | Hardware abstaction layer
+|  + src       | HAL source code
+|  + interface | HAL header files. Interface with the other parts of the program
++ modules      | Firmware operating code and headers
+|  + src       | Firmware tasks source code and main.c
+|  + interface | Operating headers. Configure the firmware environement
++ utils        | Utils code. Implement utility block like the console.
+|  + src       | Utils source code
+|  + interface | Utils header files. Interface with the other parts of the program
++ platform     | Platform specific files. Not really used yet
++ tools        | Misc. scripts for LD, OpenOCD, make, version control, ...
+|              | *** The two following folders contains the unmodified files ***
++ lib          | Libraries 
+|  + FreeRTOS  | Source FreeRTOS folder. Cleaned up from the useless files 
+|  + STM32...  | Library folders of the ST STM32 peripheral libs 
+|  + CMSIS     | Core abstraction layer
+</code></pre></blockquote>
+
+      
     </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/crazyflie/" rel="tag"># crazyflie</a>
+          
+            <a href="/tags/quadcoptor/" rel="tag"># quadcoptor</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/10/双硬盘安装win10+ubuntu 14.04/" rel="next" title="双硬盘安装win10+ubuntu 14.04">
+                <i class="fa fa-chevron-left"></i> 双硬盘安装win10+ubuntu 14.04
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/15/在模拟器中安装google play版部落冲突/" rel="prev" title="在模拟器中安装google play版部落冲突">
+                在模拟器中安装google play版部落冲突 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -1030,6 +871,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
 
   
 
