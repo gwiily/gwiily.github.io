@@ -297,235 +297,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/2535.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="gwiily">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="gwiily's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/posts/2535.html" itemprop="url">
-                  【转】Crazyflie笔记一：概述开发范围、工具、特点介绍
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2016-06-06 21:12:57" itemprop="dateCreated datePublished" datetime="2016-06-06T21:12:57+08:00">2016-06-06</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-07-07 09:44:13" itemprop="dateModified" datetime="2018-07-07T09:44:13+08:00">2018-07-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Quadcopter/" itemprop="url" rel="index"><span itemprop="name">Quadcopter</span></a></span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Quadcopter/Crazyflie-2-0/" itemprop="url" rel="index"><span itemprop="name">Crazyflie 2.0</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/posts/2535.html#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/2535.html" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>原文：<a href="http://blog.sina.com.cn/s/blog_402c071e0102v6ho.html" target="_blank" rel="noopener">http://blog.sina.com.cn/s/blog_402c071e0102v6ho.html</a></p>
-<h2 id="关于Crazyflie开发"><a href="#关于Crazyflie开发" class="headerlink" title="关于Crazyflie开发"></a>关于Crazyflie开发</h2><p>英文参考：<a href="http://www.bitcraze.se/development/" target="_blank" rel="noopener">http://www.bitcraze.se/development/</a></p>
-<h3 id="1、开发范围"><a href="#1、开发范围" class="headerlink" title="1、开发范围"></a>1、开发范围</h3><p>如果你想开发Crazyflie，那你能做些什么呢？下面列举了Crazyflie源码开发所涉及的几个方面，具体包括：</p>
-<p>1、传感器</p>
-<p>Crazyflie飞行器包含不同的传感器，这些都需要信号处理和性能优化。</p>
-<p>2、传感信号融合</p>
-<p>多个传感器的信号输出后，需要融合在一起，才能对Crazyflie飞行器姿态进行预估。</p>
-<p>3、控制理论</p>
-<p>Crazyflie包含了一系列控制闭环，主要都是对roll/pitch/yaw进行控制，也可以通过Kinect外部控制飞行器动作。</p>
-<p>4、遥控通信协议</p>
-<p>通信协议很简单，但也有足够的扩展性。</p>
-<p>5、USB</p>
-<p>支持与PC机USB通信。</p>
-<p>6、实时系统</p>
-<p>采用FREERTOS硬实时系统。</p>
-<p>7、图像处理</p>
-<p>在Kinect控制飞行器飞行时，用到了图像算法来捕捉Crazyflie飞行器的位置。</p>
-<p>8、Android</p>
-<p>采用支持USB OTH/HOST的Android设备可以控制飞行器飞行。</p>
-<p><wbr></p>
-<p>Crazyflie飞行器项目用到的编程语言：</p>
-<p>1、Crazyradio 和Crazyflie固件为C语言开发；</p>
-<p>2、Crazyflie PC API和PC客户端为Python语言开发；</p>
-<p>3、Android客户端为Java语言开发。</p>
-<h3 id="2、工具"><a href="#2、工具" class="headerlink" title="2、工具"></a>2、工具</h3><p>开发环境的设置，一直都是一个麻烦的问题。为了方便，我们提供了一个虚拟机，它包含了所有必须的东西。你需要做的就是下载虚拟机，并导入我们提供的工具。这些工具包括编译器、生成器、EDA软件、固件库、调试工具等。如果一切就绪，你可以做如下事情：</p>
-<p>1、查看、生成、调试Crazyflie固件；</p>
-<p>2、查看、生成Crazyradio固件；</p>
-<p>3、查看Crazyflie 和Crazyradio的EDA工程；</p>
-<p>4、开发PC端应用程序；</p>
-<p>5、控制Crazyflie飞行。</p>
-<h3 id="3、特点"><a href="#3、特点" class="headerlink" title="3、特点"></a>3、特点</h3><p>Crazyflie飞行器的目的是用于开发和试验用的，所以我们提供了一系列的调试与开发工具，特点如下：</p>
-<p>1、通过radio来bootload固件；</p>
-<p>2、通过radio来读取和修改列表参数；</p>
-<p>3、通过radio读取日志数据；</p>
-<p>4、大量CPU空闲时间，大量flash、RAM空间可以利用；</p>
-<p>5、JTAG接口</p>
-<p>6、留有扩展接口</p>
-<p><wbr></p>
-<p>radio bootloader允许Crazyflie通过radio来加载固件，这样可以不用接USB或者JTAG就可以刷新固件。当然Crazyradio适配器上也有USB bootloader来更新固件。</p>
-<p>Crazyflie扩展接口，不仅包含了JTAG，还包含了一系列总线、电源，用于扩展其他硬件。</p>
-<h3 id="4、社区"><a href="#4、社区" class="headerlink" title="4、社区"></a>4、社区</h3><p>1、<strong><u><a href="http://www.github.com/bitcraze" title="Bitcraze Repo at GitHub" target="_blank" rel="noopener">GitHub</a></u></strong>，所有开源文件可以在<a href="https://github.com/bitcraze" target="_blank" rel="noopener">https://github.com/bitcraze</a>查看。</p>
-<p>2、<strong><u> <wbr><a href="http://wiki.bitcraze.se/" title="Bitcraze Wiki" target="_blank" rel="noopener">wiki</a></u></strong> <wbr>，你可以在<a href="http://wiki.bitcraze.se/" target="_blank" rel="noopener">http://wiki.bitcraze.se/</a>查看Crazyflie的文档资料。</p>
-<p>3、<strong><u><a href="http://forum.bitcraze.se/" title="Bitcraze Forum" target="_blank" rel="noopener">forum</a></u></strong>，你可以在<a href="http://forum.bitcraze.se/" target="_blank" rel="noopener">http://forum.bitcraze.se/</a>论坛上参与话题讨论。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/13145.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -589,7 +360,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-07-07 09:44:13" itemprop="dateModified" datetime="2018-07-07T09:44:13+08:00">2018-07-07</time>
+                <time title="Modified: 2018-07-07 09:56:07" itemprop="dateModified" datetime="2018-07-07T09:56:07+08:00">2018-07-07</time>
               
             
           </span>
@@ -651,10 +422,14 @@
 
       
         
-          
-            <p>安装root版re浏览器，在根目录搜索de.robv.android.xposed，删掉所有搜索结果即可。</p>
-
-          
+          <p>安装root版re浏览器，在根目录搜索de.robv.android.xposed，删掉所有搜索结果即可。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/posts/13145.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -769,7 +544,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-07-07 09:44:13" itemprop="dateModified" datetime="2018-07-07T09:44:13+08:00">2018-07-07</time>
+                <time title="Modified: 2018-07-07 09:55:52" itemprop="dateModified" datetime="2018-07-07T09:55:52+08:00">2018-07-07</time>
               
             
           </span>
@@ -831,16 +606,20 @@
 
       
         
-          
-            <p>想在模拟器中玩部落冲突，但是在google市场里无法安装部落冲突以及皇室战争，显示“您的设备不兼容”，只需要修改一个文件即可。步骤如下：</p>
+          <p>想在模拟器中玩部落冲突，但是在google市场里无法安装部落冲突以及皇室战争，显示“您的设备不兼容”，只需要修改一个文件即可。步骤如下：</p>
 <ol>
 <li>首先模拟器必须自带root或者可以root，安装re管理器</li>
 <li>进入re管理器，./system目录，找到build.prop，长按选择以文本编辑的方式打开</li>
 <li>找到ro.product.model=xxx,修改xxx为手机型号，如GT-i9100,等，以及其他参数也修改一下，如name</li>
 <li>修改完成后右上角选择保存并退出，重启模拟器即可</li>
 </ol>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/posts/30908.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -955,7 +734,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-07-07 09:44:13" itemprop="dateModified" datetime="2018-07-07T09:44:13+08:00">2018-07-07</time>
+                <time title="Modified: 2018-07-07 09:53:05" itemprop="dateModified" datetime="2018-07-07T09:53:05+08:00">2018-07-07</time>
               
             
           </span>
@@ -1025,7 +804,8 @@
       
         
           
-            <blockquote>
+            <a id="more"></a>
+<blockquote>
 <p>./              | 根目录，包含Makefile</p>
 <pre><code>+ init         | 主函数
 + config       | 配置文件 
@@ -1189,7 +969,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-07-07 09:44:13" itemprop="dateModified" datetime="2018-07-07T09:44:13+08:00">2018-07-07</time>
+                <time title="Modified: 2018-07-07 09:55:44" itemprop="dateModified" datetime="2018-07-07T09:55:44+08:00">2018-07-07</time>
               
             
           </span>
@@ -1251,20 +1031,16 @@
 
       
         
-          
-            <p>一块128G SSD，和一块1T机械硬盘。</p>
+          <p>一块128G SSD，和一块1T机械硬盘。</p>
 <p>ssd分80G和48G，前80安装win10，后48G安装各种软件。</p>
-<p>机械硬盘因为之前预留了150G的主分区用来装系统，剩余的做数据存储。</p>
-<p>分区</p>
-<blockquote>
-<p>22000M /</p>
-<p>2048M 交换空间</p>
-<p>剩余的为 /home<br>没有/boot分区，引导分区选择1T的机械硬盘。</p>
-</blockquote>
-<p>按上述分区安装好以后，回到win10，用easybcd添加一个linux启动项，选grub2 。</p>
-<p>第一次启动到ubuntu后按照<a href="http://www.gwiily.com/linux/30.html">http://www.gwiily.com/linux/30.html</a>的方法修改下即可。</p>
-
-          
+<p>机械硬盘因为之前预留了150G的主分区用来装系统，剩余的做数据存储。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/posts/27732.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1379,7 +1155,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-07-07 09:44:13" itemprop="dateModified" datetime="2018-07-07T09:44:13+08:00">2018-07-07</time>
+                <time title="Modified: 2018-07-07 09:56:03" itemprop="dateModified" datetime="2018-07-07T09:56:03+08:00">2018-07-07</time>
               
             
           </span>
@@ -1441,16 +1217,15 @@
 
       
         
-          
-            <p>最近在尝试用OPENCV控制小四轴的飞行，实现小四轴的协同飞行。</p>
-<p>在利用OPENCV调用笔记本自带的摄像头的时候遇到kernel.ball的报错（USB外置的摄像头不知道有没有这个问题），谷歌了一番，找到了解决方法。摄像头调用代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#include&amp;lt;opencv\cv.h&amp;gt; </span><br><span class="line">#include&amp;lt;opencv\highgui.h&amp;gt;</span><br><span class="line">using namespace cv;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">Mat image; </span><br><span class="line">VideoCapture cap; </span><br><span class="line">cap.open(0); </span><br><span class="line">namedWindow(&quot;window&quot;,1);</span><br><span class="line">while(1)&#123;</span><br><span class="line">cap&amp;gt;&amp;gt;image; </span><br><span class="line">imshow(&quot;window&quot;,image);</span><br><span class="line">waitKey(33);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>VC++报错如下图：</p>
-<p><a href="http://www.gwiily.com/wordpress/wp-content/uploads/2015/12/QQ截图20151207151740.jpg"><img src="http://www.gwiily.com/wordpress/wp-content/uploads/2015/12/QQ截图20151207151740.jpg" alt="QQ截图20151207151740"></a></p>
-<p>在cap.open(0);语句后面加上Sleep(1000);注意大小写，在头文件中添加#include&lt;window.h&gt;;修改后的代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#include&amp;lt;opencv\cv.h&amp;gt;</span><br><span class="line">#include&amp;lt;opencv\highgui.h&amp;gt;</span><br><span class="line">#include &amp;lt;windows.h&amp;gt;</span><br><span class="line">using namespace cv;</span><br><span class="line">int main()&#123;</span><br><span class="line">Mat image;</span><br><span class="line">VideoCapture cap;</span><br><span class="line">cap.open(0);</span><br><span class="line">Sleep(1000);</span><br><span class="line">namedWindow(&quot;window&quot;,1); </span><br><span class="line">while(1)&#123;</span><br><span class="line">cap&amp;gt;&amp;gt;image;</span><br><span class="line">imshow(&quot;window&quot;,image);</span><br><span class="line">waitKey(33);</span><br><span class="line">&#125;&#125;</span><br></pre></td></tr></table></figure>
-
-          
+          <p>最近在尝试用OPENCV控制小四轴的飞行，实现小四轴的协同飞行。</p>
+<p>在利用OPENCV调用笔记本自带的摄像头的时候遇到kernel.ball的报错（USB外置的摄像头不知道有没有这个问题），谷歌了一番，找到了解决方法。摄像头调用代码如下：<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/posts/25349.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1565,7 +1340,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-07-07 09:44:13" itemprop="dateModified" datetime="2018-07-07T09:44:13+08:00">2018-07-07</time>
+                <time title="Modified: 2018-07-07 09:52:35" itemprop="dateModified" datetime="2018-07-07T09:52:35+08:00">2018-07-07</time>
               
             
           </span>
@@ -1634,45 +1409,14 @@
 
       
         
-          
-            <p>翻译：<a href="https://wiki.bitcraze.io/projects:crazyflie2:architecture:index" target="_blank" rel="noopener">https://wiki.bitcraze.io/projects:crazyflie2:architecture:index</a></p>
-<h1 id="Crazyflie-2-0-硬件中主要包含两个微控制器："><a href="#Crazyflie-2-0-硬件中主要包含两个微控制器：" class="headerlink" title="Crazyflie 2.0 硬件中主要包含两个微控制器："></a>Crazyflie 2.0 硬件中主要包含两个微控制器：</h1><ul>
-<li><p>一个NRF51，Cortex-M0，主要管理无线通信和电源管理：</p>
-<ul>
-<li>逻辑开关</li>
-<li>给系统的其他部分供电（STM32,传感器和扩展板）</li>
-<li>电源充电管理和电压测量</li>
-<li>Master radio bootloader（无线电主引导）</li>
-<li>无线电和蓝牙连接</li>
-<li>检测和检查已安装的扩展版</li>
-</ul>
-</li>
-<li><p>一个STM32F405，Cortex-M4@160MHz，负责主要的任务和飞行控制以及其他任务：</p>
-<ul>
-<li>传感器数据读取和电机控制</li>
-<li>飞行控制</li>
-<li>遥测（包括电池电压）</li>
-<li>其他用户开发的</li>
-</ul>
-</li>
-</ul>
-<p>下面这张图解释了crazyflie是如何工作的：</p>
-<p><img src="http://op0ciozbn.bkt.clouddn.com/mcu_architecture1-1024x662.png" alt="mcu_architecture1-1024x662"></p>
-<h1 id="nRF51822"><a href="#nRF51822" class="headerlink" title="nRF51822"></a>nRF51822</h1><p>nRF51的主要任务是负责无线电通信和电源管理，它其实是作为一个无限网桥（它将通信的原始数据发送给STM）</p>
-<p>Crazyflie 2.0 使用的无线电为CRTP和蓝牙，但是硬件还支持一些其他协议，例如ANT。CRTP模式和Crazyradio USB适配器兼容，并提供了2Mbit/s的数据链路。测试表明该无线电路的延迟是360us和1.26ms之间，在2Mbps的速率下可以传输1到32字节的无重复数据。使用蓝牙传输的最小延迟为7.5ms，目前执行的延迟为20ms。使用CRTP和Crazyradio传输的好处是它很容在支持USB 的书记中使用，使他成为首选的破解和实验使用的小型四旋翼。蓝牙传输可以在大多数移动设备上实现。</p>
-<p>nRF51芯片的另一个特殊性是，他是设计为使用纽扣电池供电的芯片，这意味着它可以很好的适用于低能量操作，所以它还负责电源管理。它处理着开/关逻辑，这意味着NRF51总是处于通电状态，当你长时间按下开/关按钮的时候可能会有不同的作用（这是用于启动引导程序的）。另外，它也可以允许从一个扩展口的pin针上唤醒一个外部电源。</p>
-<h1 id="STM32F405"><a href="#STM32F405" class="headerlink" title="STM32F405"></a>STM32F405</h1><p>该SMT32运行了主要固件。即使他是被NRF51引导，但它仍然可以控制NRF51。它实现了飞行控制和所有的通信算法。扩展端口主要连接在STM32上，扩展驱动板也是被连接在STM32上的。</p>
-<p>STM32F405有196kb的内存，这对所有开发者来说应该是足够的（著名的最后一句话…）。这对于飞行控制来说是绰绰有余的，但是它允许了更多的计算密集型的算法，比如，惯性传感器和GPS传感器数据的融合。</p>
-<h2 id="内部MCU通信"><a href="#内部MCU通信" class="headerlink" title="内部MCU通信"></a>内部MCU通信</h2><p>两个CPU之间的通信时通过符号连接协议处理，它是一个简单的基于分组的协议，这是我们提出的一种可扩展的通信方案。</p>
-<p>syslink提供了两颗CPU之间所有的请求信息，STM32是主CPU，而NRF51是从CPU，我们尽可能的让NRF51处理一些简单的任务，而STM32处理复杂的算法。</p>
-<p>SYSLINK消息举例：</p>
-<ul>
-<li>初始无限信号的发送和接受</li>
-<li>电源管理和测量</li>
-</ul>
-<p>上述如有错误，望指出，谢谢。</p>
-
-          
+          <p>翻译：<a href="https://wiki.bitcraze.io/projects:crazyflie2:architecture:index" target="_blank" rel="noopener">https://wiki.bitcraze.io/projects:crazyflie2:architecture:index</a><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/posts/26728.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1787,7 +1531,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-07-07 09:44:13" itemprop="dateModified" datetime="2018-07-07T09:44:13+08:00">2018-07-07</time>
+                <time title="Modified: 2018-07-07 09:54:24" itemprop="dateModified" datetime="2018-07-07T09:54:24+08:00">2018-07-07</time>
               
             
           </span>
@@ -1856,56 +1600,14 @@
 
       
         
-          
-            <p>翻译：<a href="https://wiki.bitcraze.io/doc:crazyflie:dev:starting" target="_blank" rel="noopener">https://wiki.bitcraze.io/doc:crazyflie:dev:starting</a></p>
-<h1 id="前期准备："><a href="#前期准备：" class="headerlink" title="前期准备："></a>前期准备：</h1><p>开发前，首先你需要一台crazyflie（1.0或者2.0）和crazyradio（PA）。如果你需要做复杂的开发工作，你还需要JTAG和SWD编程电缆，</p>
-<p>本页面假设你使用了 <span style="color: #000000;"><a href="https://wiki.bitcraze.io/projects:virtualmachine:index" title="projects:virtualmachine:index" target="_blank" rel="noopener">bitcraze VM 0.6</a></span>，它集成了所有的开发工具，对于开发者来说是很方便的，VirtualBox需要1G运存运行在windows，linux和mac上面。或者你可以自己搭建开发环境。</p>
-<p>crazyflie是使用C语言编写的，这意味着你需要掌握C语言的编程技术，最好要有嵌入式开发的经验。记住一点，Crazyflie1.0的RAM为20K，Crazyflie2.0的为196K。</p>
-<p>官方的主机端和客户端都是使用Python语言编写的，所以你需要掌握Python语言的一些知识，在网上有很多学习资料。</p>
-<p>第三方库和客户端还存在有其他语言，尽管如此，你还是更容易从Python语言中获得一些东西，因为它是与固件更新。</p>
-<p>所有的源代码都被托管在<a href="https://github.com/bitcraze" target="_blank" rel="noopener">github</a>上，你需要熟悉<a href="http://git-scm.com/" target="_blank" rel="noopener">git</a>的使用方法，并贡献你的修改，这样可以减少你的工作量。</p>
-<h1 id="系统结构："><a href="#系统结构：" class="headerlink" title="系统结构："></a>系统结构：</h1><h2 id="编译和刷新固件"><a href="#编译和刷新固件" class="headerlink" title="编译和刷新固件"></a>编译和刷新固件</h2><h3 id="STM32"><a href="#STM32" class="headerlink" title="STM32"></a>STM32</h3><p>从github上克隆crazyflie固件工程或者在虚拟机中使用“更新所有项目”脚本更新固件。crazyflie2.0切换至crazyflie2分支，crazyflie1切换至主分支。</p>
-<p>执行以下命令</p>
-<blockquote>
-<p>~$ cd projects/crazyflie-firmware/</p>
-</blockquote>
-<blockquote>
-<p>Either:<br>crazyflie-firmware$ git checkout master # For crazyflie 1</p>
-</blockquote>
-<blockquote>
-<p>or<br>crazyflie-firmware$ git checkout crazyflie2 # For Crazyflie 2.0</p>
-</blockquote>
-<p>然后执行：</p>
-<blockquote>
-<p>crazyflie-firmware$ make</p>
-<p>(…)</p>
-<p>DFUse cflie.dfu</p>
-<p>Build 2014.12.0:014.12.0 (2014.12.0) CLEAN</p>
-<p>CrazyLoader build!</p>
-<p>text data bss dec hex filename</p>
-<p>74496 1112 26896 102504 19068 cflie.elf</p>
-<p>crazyflie-firmware$</p>
-</blockquote>
-<p>使用无线电bootloader程序</p>
-<blockquote>
-<p>crazyflie-firmware$ make cload</p>
-</blockquote>
-<h3 id="NRF51"><a href="#NRF51" class="headerlink" title="NRF51"></a>NRF51</h3><h4 id="注意编程电缆"><a href="#注意编程电缆" class="headerlink" title="注意编程电缆"></a>注意编程电缆</h4><p>为了使用radio刷写程序和调试，我们需要JTAG或者SWD电缆。</p>
-<ul>
-<li>crazyflie1需要JTAG电缆</li>
-<li>crazyflie2.0需要SWD/SWV电缆<br>默认情况下可以使用openODC支持的电缆。Bitcraze团队使用的是STlink-V2。其他电缆比如JLink也可以使用，但是它需要手动输入刷写命令和修改Eclipse配置。</li>
-</ul>
-<p>Makefile文件默认配置为STlink-V2电缆，如果你要配置另外一根编程电缆，在项目根目录下创建一个.mk文件。文件内容如下：</p>
-<blockquote>
-<p>OPENOCD_INTERFACE ?= interface/stlink-v2.cfg</p>
-<p>OPENOCD_TARGET ?= target/stm32f4x_stlink.cfg</p>
-</blockquote>
-<h4 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h4><p>使用编程电缆，执行命令行刷写固件</p>
-<blockquote>
-<p>make flash</p>
-</blockquote>
-<h4 id="Eclipse（官方文档还未补充）"><a href="#Eclipse（官方文档还未补充）" class="headerlink" title="Eclipse（官方文档还未补充）"></a>Eclipse（官方文档还未补充）</h4>
-          
+          <p>翻译：<a href="https://wiki.bitcraze.io/doc:crazyflie:dev:starting" target="_blank" rel="noopener">https://wiki.bitcraze.io/doc:crazyflie:dev:starting</a><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/posts/62395.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2020,7 +1722,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-07-07 09:44:13" itemprop="dateModified" datetime="2018-07-07T09:44:13+08:00">2018-07-07</time>
+                <time title="Modified: 2018-07-07 09:54:16" itemprop="dateModified" datetime="2018-07-07T09:54:16+08:00">2018-07-07</time>
               
             
           </span>
@@ -2089,95 +1791,14 @@
 
       
         
-          
-            <p><img src="http://op0ciozbn.bkt.clouddn.com/001aRpVkgy6OUHv4E32cc690.jpg" alt="001aRpVkgy6OUHv4E32cc690"></p>
-<p>Crazyflie2.0是一个多功能的飞速发展平台，它的重量只有27克，适合在你的手掌。其先进的功能，使得它非常适合开发人员和蓝牙低功耗（LE）功能，可以很容易地从移动设备飞行。由于其体积小，重量轻，这是非常适合室内使用，但也可以很容易上面盘旋你的房子，因为它可以在你的餐桌上徘徊。配件设计为无需焊接，只通过简单的连接到电机的电路板，就可以准备起飞了。</p>
-<p>功能：</p>
-<ul>
-<li>Durable design。耐用的设计。</li>
-<li>Easy assembly and no soldering required。简单的组装并不需要焊接。</li>
-<li>Supports expansion boards with automatic detection。支持扩展卡。</li>
-<li>Supports flying from iOS and Android with Bluetooth LE support as well as from Windows/MacOSX/Linux with the Crazyradio or Crazyradio PA。支持IOS,Android,蓝牙控制，以及使用Crazyradio在Windows/MacOSX/Linux上控制。</li>
-<li>Tested to above 1 km radio range line-of-sight (LOS) with Crazyradio PA。Crazyradio PA可以在1km范围内控制。</li>
-<li>Wireless firmware update。无线固件升级。</li>
-<li>On-board charging via standard uUSB。USB充电设计。</li>
-<li>Dual-MCU architecture with dedicated radio/power management SoC for advanced applications.双MCU设计，单独的电源管理芯片。</li>
-<li><p>Real-time logging, graphing, and setting of variables as well as full access to the available expansion boards with use of a Crazyradio or Crazyradio PA and a personal computer。实时记录日志，绘图，变量的设置。<br>crazyflie2.0的硬件规格</p>
-</li>
-<li><div class="li">Mechanical specification</div>
-
-<ul>
-<li><div class="li">Weight: 27g</div></li>
-<li><div class="li">Size (WxHxD): 92x92x29mm (motor-to-motor and including motor mount feet)</div>
-</li>
-</ul>
-</li>
-<li><div class="li">Radio specification</div>
-
-<ul>
-<li><div class="li">20 dBm radio amplifier tested to &gt; 1 km range LOS with Crazyradio PA</div></li>
-<li><div class="li">Bluetooth Low Energy support with iOS and Android clients available (tested on iOS 7.1+ and Android 4.4+)</div></li>
-<li><div class="li">Radio backwards compatible with original Crazyflie and Crazyradio</div>
-</li>
-</ul>
-</li>
-<li><div class="li">Micro-controllers</div>
-
-<ul>
-<li><div class="li">STM32F405 main application MCU (Cortex-M4, 168MHz, 192kb SRAM, 1Mb flash)</div></li>
-<li><div class="li">nRF51822 radio and power management MCU (Cortex-M0, 32Mhz, 16kb SRAM, 128kb flash)</div>
-</li>
-</ul>
-</li>
-<li><div class="li">uUSB connector</div>
-
-<ul>
-<li><div class="li">On-board LiPo charger with 100mA, 500mA and 980mA modes available</div></li>
-<li><div class="li">Full speed USB device interface</div></li>
-<li><div class="li">Partial USB OTG capability (USB OTG present but no 5V output)</div>
-</li>
-</ul>
-</li>
-<li><div class="li">IMU</div>
-
-<ul>
-<li><div class="li">3 axis gyro (MPU-9250)</div></li>
-<li><div class="li">3 axis accelerometer (MPU-9250)</div></li>
-<li><div class="li">3 axis magnetometer (MPU-9250)</div></li>
-<li><div class="li">High precision pressure sensor (LPS25H)</div>
-</li>
-</ul>
-</li>
-<li><div class="li">Flight specification</div>
-
-<ul>
-<li><div class="li">Flight time with stock battery: 7 minutes</div></li>
-<li><div class="li">Chraging time with stock battery: 40 minutes</div></li>
-<li><div class="li">Max recommended payload weight: 15 g</div>
-</li>
-</ul>
-</li>
-<li><div class="li">Expansion connector with</div>
-
-<ul>
-<li><div class="li">VCC (3.0V, max 100mA)</div></li>
-<li><div class="li">GND</div></li>
-<li><div class="li">VCOM (unregulated VBAT or VUSB, max 1A)</div></li>
-<li><div class="li">VUSB (both for input and output)</div></li>
-<li><div class="li">I2C (400kHz)</div></li>
-<li><div class="li">SPI</div></li>
-<li><div class="li">2 x UART</div></li>
-<li><div class="li">4 x GPIO/CS for SPI</div></li>
-<li><div class="li">1-wire bus for expansion identification</div></li>
-<li><div class="li">2 x GPIO connected to nRF51</div>
-</li>
-</ul>
-</li>
-<li><p><div class="li">8KB EEPROM</div><br>翻译：<a href="https://wiki.bitcraze.io/projects:crazyflie2:index" target="_blank" rel="noopener">https://wiki.bitcraze.io/projects:crazyflie2:index</a></p>
-</li>
-</ul>
-
-          
+          <p>Crazyflie2.0是一个多功能的飞速发展平台，它的重量只有27克，适合在你的手掌。其先进的功能，使得它非常适合开发人员和蓝牙低功耗（LE）功能，可以很容易地从移动设备飞行。由于其体积小，重量轻，这是非常适合室内使用，但也可以很容易上面盘旋你的房子，因为它可以在你的餐桌上徘徊。配件设计为无需焊接，只通过简单的连接到电机的电路板，就可以准备起飞了。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/posts/18942.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2292,7 +1913,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-07-07 09:44:13" itemprop="dateModified" datetime="2018-07-07T09:44:13+08:00">2018-07-07</time>
+                <time title="Modified: 2018-07-07 09:55:49" itemprop="dateModified" datetime="2018-07-07T09:55:49+08:00">2018-07-07</time>
               
             
           </span>
@@ -2361,41 +1982,205 @@
 
       
         
+          <p>参考：<a href="http://dev.px4.io/simulation-gazebo.html" target="_blank" rel="noopener">http://dev.px4.io/simulation-gazebo.html</a><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/posts/53711.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/30380.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gwiily">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gwiily's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/posts/30380.html" itemprop="url">
+                  pixhawk在linux（ubuntu14.04）下的开发环境搭建及源码编译
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2015-11-25 10:47:37" itemprop="dateCreated datePublished" datetime="2015-11-25T10:47:37+08:00">2015-11-25</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-07-07 09:54:33" itemprop="dateModified" datetime="2018-07-07T09:54:33+08:00">2018-07-07</time>
+              
+            
+          </span>
+
           
-            <p>参考：<a href="http://dev.px4.io/simulation-gazebo.html" target="_blank" rel="noopener">http://dev.px4.io/simulation-gazebo.html</a></p>
-<p>第一步：安装CLANG</p>
-<blockquote>
-<p>sudo apt-get install -y clang-3.5 lldb-3.5</p>
-</blockquote>
-<p>第二步：安装ant</p>
-<blockquote>
-<p>sudo apt-get install ant</p>
-</blockquote>
-<p>第三步：安装Gazebo仿真工具，你也可以选择其他仿真工具。（参考：<a href="http://gazebosim.org/tutorials?tut=install_ubuntu&amp;ver=6.0&amp;cat=install）" target="_blank" rel="noopener">http://gazebosim.org/tutorials?tut=install_ubuntu&amp;ver=6.0&amp;cat=install）</a></p>
-<blockquote>
-<p>wget -O /tmp/gazebo6_install.sh <a href="http://osrf-distributions.s3.amazonaws.com/gazebo/gazebo6_install.sh" target="_blank" rel="noopener">http://osrf-distributions.s3.amazonaws.com/gazebo/gazebo6_install.sh</a>; sudo sh /tmp/gazebo6_install.sh</p>
-</blockquote>
-<p>第四步：在Firmware目录中执行以下命令</p>
-<blockquote>
-<p>cd ~/src/Firmware<br>make posix_sitl_default gazebo</p>
-</blockquote>
-<p>稍等会出现以下界面和Gazebo仿真界面</p>
-<pre><code>[init] shell id: &lt;span class=&quot;hljs-number&quot;&gt;140735313310464&lt;/span&gt;
-[init] task name: mainapp
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Quadcopter/" itemprop="url" rel="index"><span itemprop="name">Quadcopter</span></a></span>
 
-______  __   __    ___ 
-| ___ \ \ \ / /   /   |
-| |_/ /  \ V /   / /| |
-|  __/   /   \  / /_| |
-| |     / /^\ \ \___  |
-\_|     \/   \/     |_/
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Quadcopter/PIXHAWK开发/" itemprop="url" rel="index"><span itemprop="name">PIXHAWK开发</span></a></span>
 
-Ready to fly.
-
-pxh&amp;gt;
-</code></pre><p><img src="http://op0ciozbn.bkt.clouddn.com/2015-11-25-222517屏幕截图-1024x586.png" alt="2015-11-25-222517屏幕截图-1024x586"></p>
+                
+                
+              
+            </span>
+          
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/30380.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/30380.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>参考：<a href="http://dev.px4.io/starting-installing-linux.html" target="_blank" rel="noopener">http://dev.px4.io/starting-installing-linux.html</a><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/posts/30380.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2483,7 +2268,7 @@ pxh&amp;gt;
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

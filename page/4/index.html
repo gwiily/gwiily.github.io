@@ -297,237 +297,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/30380.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="gwiily">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="gwiily's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/posts/30380.html" itemprop="url">
-                  pixhawk在linux（ubuntu14.04）下的开发环境搭建及源码编译
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2015-11-25 10:47:37" itemprop="dateCreated datePublished" datetime="2015-11-25T10:47:37+08:00">2015-11-25</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-07-07 09:44:13" itemprop="dateModified" datetime="2018-07-07T09:44:13+08:00">2018-07-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Quadcopter/" itemprop="url" rel="index"><span itemprop="name">Quadcopter</span></a></span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Quadcopter/PIXHAWK开发/" itemprop="url" rel="index"><span itemprop="name">PIXHAWK开发</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/posts/30380.html#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/30380.html" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>参考：<a href="http://dev.px4.io/starting-installing-linux.html" target="_blank" rel="noopener">http://dev.px4.io/starting-installing-linux.html</a></p>
-<p>我使用的是UBUNTU14.04，安装了win10+UBUNTU的双系统，方便在各个系统下的调试开发。</p>
-<p>安装过程官方文档已经说的比较清楚了，安装的时候最好不要挂代理，否则可能会无法下载某些软件和源码。</p>
-<p>（本文仅针对硬件为PIXHAWK的开发环境搭建，其他硬件请参考官方文档）</p>
-<p>第一步：执行以下三条命令</p>
-<blockquote>
-<p>sudo add-apt-repository ppa:george-edison55/cmake-3.x -y<br>sudo apt-get update<br>sudo apt-get install python-argparse git-core wget zip \<br>python-empy qtcreator cmake build-essential -y</p>
-</blockquote>
-<p>第二步：执行以下命令删除串口模式管理器</p>
-<blockquote>
-<p>sudo apt-get remove modemmanager</p>
-</blockquote>
-<p>第三步：执行以下命令更新依赖包：</p>
-<blockquote>
-<p>sudo add-apt-repository ppa:terry.guo/gcc-arm-embedded -y<br>sudo apt-get update<br>sudo apt-get install python-serial openocd \<br>flex bison libncurses5-dev autoconf texinfo build-essential \<br>libftdi-dev libtool zlib1g-dev genromfs \<br>python-empy</p>
-</blockquote>
-<p>第四步：执行以下命令安装相应版本的GCC</p>
-<blockquote>
-<p>sudo apt-get install gcc-arm-none-eabi=4.8.3-18ubuntu2+12 -y<br>（对于老版本的ubuntu，例如Ubuntu 14.04 (Trusty) and 14.10，执行以下命令）<br>sudo apt-get install gcc-arm-none-eabi -y</p>
-</blockquote>
-<p>第五步：更该用户权限，将当前用户添加进组中$USER替换为当前用户：</p>
-<blockquote>
-<p>sudo usermod -a -G dialout $USER</p>
-</blockquote>
-<p>第六步：执行以下命令下载PX4源码</p>
-<blockquote>
-<p>mkdir -p ~/src<br>cd ~/src<br>git clone <a href="https://github.com/PX4/Firmware.git" target="_blank" rel="noopener">https://github.com/PX4/Firmware.git</a></p>
-</blockquote>
-<p>第七步：编译源码</p>
-<blockquote>
-<p>cd Firmware<br>make px4fmu-v2_default</p>
-</blockquote>
-<p>显示以下为编译成功：</p>
-<blockquote>
-<p>[<span class="hljs-number">100</span>%] Linking CXX executable firmware_nuttx<br>    [<span class="hljs-number">100</span>%] Built target firmware_nuttx<br>    Scanning dependencies of target build_firmware_px4fmu-v2<br>    [<span class="hljs-number">100</span>%] Generating nuttx-px4fmu-v2-default.px4<br>    [<span class="hljs-number">100</span>%] Built target build_firmware_px4fmu-v2<br>    `</p>
-</blockquote>
-<p>第八步：上传固件至PIXHAWK</p>
-<blockquote>
-<p>make px4fmu-v2_default upload </p>
-</blockquote>
-<p>显示以下为上传成功：</p>
-<blockquote>
-<p><pre>`Erase  : [====================] <span class="hljs-number">100.0</span>%<br>    Program: [====================] <span class="hljs-number">100.0</span>%<br>    Verify : [====================] <span class="hljs-number">100.0</span>%<br>    Rebooting.<br>    [<span class="hljs-number">100</span>%] Built target upload</pre></p>
-</blockquote>
-<p>上述如有错误，望指正，谢谢。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/51394.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -591,7 +360,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-07-07 09:44:13" itemprop="dateModified" datetime="2018-07-07T09:44:13+08:00">2018-07-07</time>
+                <time title="Modified: 2018-07-07 09:53:58" itemprop="dateModified" datetime="2018-07-07T09:53:58+08:00">2018-07-07</time>
               
             
           </span>
@@ -653,28 +422,14 @@
 
       
         
-          
-            <p>转载自<a href="http://bbs.pcbeta.com/viewthread-1165473-1-1.html" target="_blank" rel="noopener">bbs.pcbeta.com/viewthread-1165473-1-1.html</a></p>
-<p>UBUNTU14.04全新安装后，默认使用GRUB2引导，共存的win10系统启动后无限网卡无法使用，声卡插上耳机也无声音，于是使用PE重建硬盘引导，恢复MBR引导，再使用easybsd新建一个grub2的引导项，但是从这个引导后，仅显示GRUB的命令窗口，还是无法进入UBUNTU系统，可以执行以下几条命令：</p>
-<blockquote>
-<p>find                                    //列出分区表</p>
-</blockquote>
-<blockquote>
-<p>root (hdX,X)                   //找到UBUNTU的分区目录</p>
-</blockquote>
-<blockquote>
-<p>kernel /boot/grub/i386-PC/core.img    //可以使用TAB补全目录</p>
-</blockquote>
-<blockquote>
-<p>boot                                   //这样就可以进入UBUNTU系统了</p>
-</blockquote>
-<p>进入系统以后再打开终端执行以下命令：</p>
-<blockquote>
-<p>sudo cp /boot/grub/i386/core.img /boot/grub/</p>
-</blockquote>
-<p>这样就可以在MBR的引导下进入UBUNTU了。</p>
-
-          
+          <p>转载自<a href="http://bbs.pcbeta.com/viewthread-1165473-1-1.html" target="_blank" rel="noopener">bbs.pcbeta.com/viewthread-1165473-1-1.html</a><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/posts/51394.html#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -789,7 +544,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-07-07 09:44:13" itemprop="dateModified" datetime="2018-07-07T09:44:13+08:00">2018-07-07</time>
+                <time title="Modified: 2018-07-07 09:54:42" itemprop="dateModified" datetime="2018-07-07T09:54:42+08:00">2018-07-07</time>
               
             
           </span>
@@ -859,7 +614,8 @@
       
         
           
-            <p>参考：<a href="http://www.pixhawk.com/dev/quickstart" target="_blank" rel="noopener">http://www.pixhawk.com/dev/quickstart</a>，基本上是做了个翻译</p>
+            <a id="more"></a>
+<p>参考：<a href="http://www.pixhawk.com/dev/quickstart" target="_blank" rel="noopener">http://www.pixhawk.com/dev/quickstart</a>，基本上是做了个翻译</p>
 <p>第一步：安装<a href="http://msysgit.github.io/" title="http://msysgit.github.io/" target="_blank" rel="noopener">MSysGIT</a>。</p>
 <p>第二步：安装<a href="http://download.tortoisegit.org/" title="http://download.tortoisegit.org/" target="_blank" rel="noopener">TortoiseGIT</a>，有一步是按下图所示设置，其他的都默认。</p>
 <p><img src="http://op0ciozbn.bkt.clouddn.com/tortoisegit-settings.png" alt="tortoisegit-settings"></p>
@@ -981,7 +737,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
