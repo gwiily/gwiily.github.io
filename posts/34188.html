@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="原文：http://blog.sina.com.cn/s/blog_402c071e0102v7py.html 7.1 CRTP通信包       英文参考：http://wiki.bitcraze.se/projects:crazyflie:firmware:comm_protocol        CRTP是Crazyflie的通信协议（Crazy RealTime Protocol）。该协议">
+<meta name="keywords" content="crazyflie,quadcoptor">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【转】Crazyflie笔记五：CRTP 实时通信协议(一）">
+<meta property="og:url" content="https://www.gwiily.com/posts/34188.html">
+<meta property="og:site_name" content="gwiily&#39;s blog">
+<meta property="og:description" content="原文：http://blog.sina.com.cn/s/blog_402c071e0102v7py.html 7.1 CRTP通信包       英文参考：http://wiki.bitcraze.se/projects:crazyflie:firmware:comm_protocol        CRTP是Crazyflie的通信协议（Crazy RealTime Protocol）。该协议">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.gwiily.com/wordpress/wp-content/uploads/2016/06/001aRpVkgy6PvcDr4fv29amp690.jpg">
+<meta property="og:image" content="http://www.gwiily.com/wordpress/wp-content/uploads/2016/06/001aRpVkgy6PvbEIOzL71amp690.jpg">
+<meta property="og:updated_time" content="2017-09-05T14:15:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【转】Crazyflie笔记五：CRTP 实时通信协议(一）">
+<meta name="twitter:description" content="原文：http://blog.sina.com.cn/s/blog_402c071e0102v7py.html 7.1 CRTP通信包       英文参考：http://wiki.bitcraze.se/projects:crazyflie:firmware:comm_protocol        CRTP是Crazyflie的通信协议（Crazy RealTime Protocol）。该协议">
+<meta name="twitter:image" content="http://www.gwiily.com/wordpress/wp-content/uploads/2016/06/001aRpVkgy6PvcDr4fv29amp690.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.gwiily.com/posts/34188.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【转】Crazyflie笔记五：CRTP 实时通信协议(一） | gwiily's blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">gwiily's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Stay hungry,Stay foolish</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/34188.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gwiily">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gwiily's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【转】Crazyflie笔记五：CRTP 实时通信协议(一）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-06-08 21:30:26" itemprop="dateCreated datePublished" datetime="2016-06-08T21:30:26+08:00">2016-06-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2017-09-05 22:15:33" itemprop="dateModified" datetime="2017-09-05T22:15:33+08:00">2017-09-05</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Quadcopter/" itemprop="url" rel="index"><span itemprop="name">Quadcopter</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Quadcopter/Crazyflie-2-0/" itemprop="url" rel="index"><span itemprop="name">Crazyflie 2.0</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/34188.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/34188.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>原文：<a href="http://blog.sina.com.cn/s/blog_402c071e0102v7py.html" target="_blank" rel="noopener">http://blog.sina.com.cn/s/blog_402c071e0102v7py.html</a></p>
+<h2 id="7-1-CRTP通信包"><a href="#7-1-CRTP通信包" class="headerlink" title="7.1 CRTP通信包"></a>7.1 CRTP通信包</h2><p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> 英文参考：<a href="http://wiki.bitcraze.se/projects:crazyflie:firmware:comm_protocol" target="_blank" rel="noopener">http://wiki.bitcraze.se/projects:crazyflie:firmware:comm_protocol</a></p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> CRTP是Crazyflie的通信协议（<em>Crazy RealTime Protocol</em>）。该协议分3层。</p>
+<p><img src="http://www.gwiily.com/wordpress/wp-content/uploads/2016/06/001aRpVkgy6PvcDr4fv29amp690.jpg" alt="Crazyflie笔记五: &lt;wbr&gt;CRTP &lt;wbr&gt;实时通信协议(一）" title="Crazyflie笔记五: &lt;wbr&gt;CRTP &lt;wbr&gt;实时通信协议(一）"><br><wbr></p>
+<p> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> 第一层：<strong>CRTP Link</strong>。负责在PC与Crazyflie之间传输数据包。主要处理包长度，包错误信息。</p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> 第二层：<strong>CRTP Packet handling**</strong>。**将数据包传递给相应的飞行器子系统和PC控制软件。</p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> 第三层：<strong>Application/ports</strong>。代表发送和接受数据包的相应子系统。</p>
+<h3 id="1、数据通道"><a href="#1、数据通道" class="headerlink" title="1、数据通道"></a>1、数据通道</h3><p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> CRTP Link层对应的数据通道：</p>
+<p><table border="1" cellspacing="0" cellpadding="0"></table></p>
+<p><tbody></tbody></p>
+<p><tr></tr></p>
+<p><td valign="top" width="284"><strong>UART link</strong></td></p>
+<p><td valign="top" width="284">主要用于早期开发。</td><br></p>
+<p><tr></tr></p>
+<p><td valign="top" width="284"><strong>USB link</strong></td></p>
+<p><td valign="top" width="284">micro USB端口。</td><br></p>
+<p><tr></tr></p>
+<p><td valign="top" width="284"><strong>radio link</strong></td></p>
+<p><td valign="top" width="284">主要使用2.4 GHz NordicSemi的nRF24L01芯片。</td><br><br><br><br><wbr></p>
+<h3 id="2、数据端口"><a href="#2、数据端口" class="headerlink" title="2、数据端口"></a>2、数据端口</h3><p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> 当前端口分配：</p>
+<p><table border="1" cellspacing="0" cellpadding="0"></table></p>
+<p><tbody></tbody></p>
+<p><tr></tr></p>
+<td>
+
+<p><strong>端口号</strong></p>
+<p><strong>Port</strong></p>
+<p></p></td><p></p>
+<td>
+
+<p><strong>数据端口</strong></p>
+<p></p></td><p></p>
+<td>
+
+<p><strong>用途</strong></p>
+<p></p></td><br><p></p>
+<p><tr></tr></p>
+<p><td>0</td></p>
+<p><td><a href="http://wiki.bitcraze.se/projects:crazyflie:firmware:console" title="projects:crazyflie:firmware:console" target="_blank" rel="noopener">Console</a></td></p>
+<p><td>Console 采用consoleprintf函数可以将调试信息输出到PC端。</td><br></p>
+<p><tr></tr></p>
+<p><td>2</td></p>
+<p><td><a href="http://wiki.bitcraze.se/projects:crazyflie:firmware:param" title="projects:crazyflie:firmware:param" target="_blank" rel="noopener">Parameters</a></td></p>
+<p><td>读写Crazyflie参数，这些参数在源码中用宏来表示。</td><br></p>
+<p><tr></tr></p>
+<p><td>3</td></p>
+<p><td><a href="http://wiki.bitcraze.se/projects:crazyflie:crtp:commander" title="projects:crazyflie:crtp:commander" target="_blank" rel="noopener">Commander</a></td></p>
+<p><td>发送rollpitchyawthrust控制指令。</td><br></p>
+<p><tr></tr></p>
+<p><td>5</td></p>
+<p><td><a href="http://wiki.bitcraze.se/projects:crazyflie:firmware:log#communication_protocol" title="projects:crazyflie:firmware:log" target="_blank" rel="noopener">Log</a></td></p>
+<p><td>设置日志变量，这些日志变量将会以指定的周期发送。日志变量在源码中用宏来表示。</td><br></p>
+<p><tr></tr></p>
+<p><td>14</td></p>
+<p><td><a href="http://wiki.bitcraze.se/projects:crazyflie:pc_utils:debugdriver" title="projects:crazyflie:pc_utils:debugdriver" target="_blank" rel="noopener">Client-side debugging</a></td></p>
+<p><td>用于调试PC端UI界面程序，只针对Crazyflie Python API。</td><br></p>
+<p><tr></tr></p>
+<p><td>15</td></p>
+<p><td><a href="http://wiki.bitcraze.se/projects:crazyflie:firmware:linklayer" title="projects:crazyflie:firmware:linklayer" target="_blank" rel="noopener">Link layer</a></td></p>
+<p><td>用于控制和访问通信链路层</td><br><br><br><br><wbr></p>
+<p><strong> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> A) <wbr> <wbr> <wbr> <wbr> <wbr> <wbr></strong> <strong>关于**</strong>console<strong><strong>数据端口</strong></strong>:**</p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> 英文参考：<a href="http://wiki.bitcraze.se/projects:crazyflie:firmware:console" target="_blank" rel="noopener">http://wiki.bitcraze.se/projects:crazyflie:firmware:console</a></p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> Console 采用consoleprintf函数可以将调试信息输出到PC端。</p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> Console端口用于Crazyflie飞行器向PC机单向打印信息，采用consoleprintf函数。飞行器端的console缓存长度为31个字节（0-30），当以下任一条件满足则发送。</p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr>  <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> 1）输出缓存满31字节，字符串则自动发送到PC机；</p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr>  <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> 2）字符串带n或者r，也触发字符串发送；</p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr>  <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> 3）调用flush命令也会发送。</p>
+<p><wbr></p>
+<p><strong> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> B) <wbr> <wbr> <wbr> <wbr> <wbr> <wbr></strong> <strong>关于**</strong>Commander<strong>**数据端口</strong></p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> 英文参考：<a href="http://wiki.bitcraze.se/projects:crazyflie:crtp:commander" target="_blank" rel="noopener">http://wiki.bitcraze.se/projects:crazyflie:crtp:commander</a></p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> Commander端口，用来发送rollpitchyawthrust控制指令。一旦通信连接建立，这些rollpitchyawthrust数据包将被发送，这些值将会不断更新。</p>
+<p><table border="1" width="100%" cellspacing="0" cellpadding="0"></table></p>
+<p><tbody></tbody></p>
+<p><tr></tr></p>
+<td width="15%">
+
+<p><strong>Name</strong></p>
+<p></p></td><p></p>
+<td width="13%">
+
+<p><strong>Byte</strong></p>
+<p></p></td><p></p>
+<td width="11%">
+
+<p><strong>Size</strong></p>
+<p></p></td><p></p>
+<td width="18%">
+
+<p><strong>Type</strong></p>
+<p></p></td><p></p>
+<td width="41%">
+
+<p><strong>Comment</strong></p>
+<p></p></td><br><p></p>
+<p><tr></tr></p>
+<p><td width="15%">Roll</td></p>
+<p><td width="13%">0-3</td></p>
+<p><td width="11%">4</td></p>
+<p><td width="18%">float</td></p>
+<p><td width="41%">Roll值</td><br></p>
+<p><tr></tr></p>
+<p><td width="15%">Pitch</td></p>
+<p><td width="13%">4-7</td></p>
+<p><td width="11%">4</td></p>
+<p><td width="18%">float</td></p>
+<p><td width="41%">Pitch值</td><br></p>
+<p><tr></tr></p>
+<p><td width="15%">Yaw</td></p>
+<p><td width="13%">8-11</td></p>
+<p><td width="11%">4</td></p>
+<p><td width="18%">float</td></p>
+<p><td width="41%">Yaw值</td><br></p>
+<p><tr></tr></p>
+<p><td width="15%">Thrust</td></p>
+<p><td width="13%">12-13</td></p>
+<p><td width="11%">2</td></p>
+<p><td width="18%">uint16_t</td></p>
+<p><td width="41%">Thrust值</td><br><br><br><br><wbr></p>
+<p><strong> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> C) <wbr> <wbr> <wbr> <wbr> <wbr> <wbr></strong> <strong>关于**</strong>LOG<strong>**数据端口</strong></p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> 英文参考：<a href="http://wiki.bitcraze.se/projects:crazyflie:firmware:log#communication_protocol" target="_blank" rel="noopener">http://wiki.bitcraze.se/projects:crazyflie:firmware:log#communication_protocol</a></p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> LOG数据端口就是用来在Crazyflie飞行期间，实时将log数据传回PC端显示。每一个日志变量都属于一个group组，并有一个name名字。</p>
+<p><img src="http://www.gwiily.com/wordpress/wp-content/uploads/2016/06/001aRpVkgy6PvbEIOzL71amp690.jpg" alt="Crazyflie笔记五: &lt;wbr&gt;CRTP &lt;wbr&gt;实时通信协议(一）" title="Crazyflie笔记五: &lt;wbr&gt;CRTP &lt;wbr&gt;实时通信协议(一）"></p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> 在log.h源码中，日志变量通过一系列宏指令来定义。所有的日志变量都被定义在一个log group组里，例如：</p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr>  <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> LOG_GROUP_START(stabilizer)</p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr>  <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> LOG_ADD(LOG_FLOAT, roll, &amp;eulerRollActual)</p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr>  <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> LOG_ADD(LOG_FLOAT, pitch, &amp;eulerPitchActual)</p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr>  <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> LOG_ADD(LOG_FLOAT, yaw, &amp;eulerYawActual)</p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr>  <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> LOG_GROUP_STOP(stabilizer)</p>
+<p><wbr></p>
+<p><table border="1" width="568" cellspacing="0" cellpadding="0"></table></p>
+<p><tbody></tbody></p>
+<p><tr></tr></p>
+<td width="284">
+
+<p><strong>宏</strong></p>
+<p></p></td><p></p>
+<td width="284">
+
+<p><strong>用法</strong></p>
+<p></p></td><br><p></p>
+<p><tr></tr></p>
+<p><td width="284">LOG_GROUP_START(grp_name)</td></p>
+<p><td width="284">开始一个log group的定义，其中grp_name为组名</td><br></p>
+<p><tr></tr></p>
+<p><td width="284">LOG_GROUP_STOP(grp_name)</td></p>
+<p><td width="284">停止一个log group的定义</td><br></p>
+<p><tr></tr></p>
+<p><td width="284">LOG_ADD(type, name, address)</td></p>
+<p><td width="284">添加一个log变量。</td></p>
+<p>type 是变量类型；</p>
+<p>name 是发送到地面站的变量名字；</p>
+<p>address 是源码中真实变量的地址。<br><br><br><br><wbr></p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> 日志变量的变量类型，列举如下：</p>
+<p><table border="1" width="553" cellspacing="0" cellpadding="0"></table></p>
+<p><tbody></tbody></p>
+<p><tr></tr></p>
+<p><td><strong>类型定义</strong></td></p>
+<p><td><strong>对应的**</strong>C99<strong>**变量类型</strong></td></p>
+<p><td><strong>说明</strong></td><br></p>
+<p><tr></tr></p>
+<p><td><strong>LOG_UINT8</strong></td></p>
+<p><td>uint8_t</td></p>
+<p><td> <wbr></td><br></p>
+<p><tr></tr></p>
+<p><td><strong>LOG_UINT16</strong></td></p>
+<p><td>uint16_t</td></p>
+<p><td> <wbr></td><br></p>
+<p><tr></tr></p>
+<p><td><strong>LOG_UINT32</strong></td></p>
+<p><td>uint32_t</td></p>
+<p><td> <wbr></td><br></p>
+<p><tr></tr></p>
+<p><td><strong>LOG_INT8</strong></td></p>
+<p><td>int8_t</td></p>
+<p><td> <wbr></td><br></p>
+<p><tr></tr></p>
+<p><td><strong>LOG_INT16</strong></td></p>
+<p><td>int16_t</td></p>
+<p><td> <wbr></td><br></p>
+<p><tr></tr></p>
+<p><td><strong>LOG_INT32</strong></td></p>
+<p><td>int32_t</td></p>
+<p><td> <wbr></td><br></p>
+<p><tr></tr></p>
+<p><td><strong>LOG_FLOAT</strong></td></p>
+<p><td>float</td></p>
+<p><td>IEEE 754 binary32 (single precision float)</td><br></p>
+<p><tr></tr></p>
+<p><td><strong>LOG_FP16</strong></td></p>
+<p><td>N/A?</td></p>
+<p><td>IEEE 754 binary16, intended for log report only (not in memory)</td><br><br><br><br><wbr></p>
+<h3 id="3、CRTP通信包的结构"><a href="#3、CRTP通信包的结构" class="headerlink" title="3、CRTP通信包的结构"></a>3、CRTP通信包的结构</h3><p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> CRTP数据包，由一个8-bit header头，和0-30数据字节组成。</p>
+<p><table border="1" cellspacing="0" cellpadding="0"></table></p>
+<p><tbody></tbody></p>
+<p><tr></tr></p>
+<td valign="top" width="71">
+
+<p>bit 7</p>
+<p></p></td><p></p>
+<p><td valign="top" width="71">bit 6</td></p>
+<p><td valign="top" width="71">bit 5</td></p>
+<p><td valign="top" width="71">bit 4</td></p>
+<p><td valign="top" width="71">bit 3</td></p>
+<p><td valign="top" width="71">bit 2</td></p>
+<p><td valign="top" width="71">bit 1</td></p>
+<p><td valign="top" width="71">bit 0</td><br></p>
+<p><tr></tr></p>
+<td colspan="4" valign="top" width="284">
+
+<p>目标数据端口 Port</p>
+<p>例：Log=5; Commander= 3 ; Parameters=2</p>
+<p></p></td><p></p>
+<td colspan="2" valign="top" width="142">
+
+<p>Res</p>
+<p>保留</p>
+<p></p></td><p></p>
+<td colspan="2" valign="top" width="142">
+
+<p>目标通道 Channel</p>
+<p> <wbr></p>
+<p></p></td><br><p></p>
+<p><tr></tr></p>
+<td colspan="8" valign="top" width="568">
+
+<p>DATA 0</p>
+<p></p></td><br><p></p>
+<p><tr></tr></p>
+<td colspan="8" valign="top" width="568">
+
+<p>DATA1</p>
+<p></p></td><br><p></p>
+<p><tr></tr></p>
+<td colspan="8" valign="top" width="568">
+
+<p>…</p>
+<p></p></td><br><p></p>
+<p><tr></tr></p>
+<td colspan="8" valign="top" width="568">
+
+<p>…</p>
+<p></p></td><br><p></p>
+<p><tr></tr></p>
+<td colspan="8" valign="top" width="568">
+
+<p>DATA30</p>
+<p></p></td><br><br><br><br><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr>目标数据端口，指的是通信子系统。通信子系统可以是Console、Parameters、Commander、Log、Client-side debugging、Link layer等等。<p></p>
+<h3 id="4、物理接口层"><a href="#4、物理接口层" class="headerlink" title="4、物理接口层"></a>4、物理接口层</h3><p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> 下面所讲述的数据通信包适用于有线和无线传输。但是数据包大小为31字节，所以无线传输时最好将所有数据能够完整放在一个数据包以内传输。</p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> 对于无线传输接口，会增加额外的CRC数据头。对于串口的参数配置为，波特率115200,8N1。CRTP数据包格式如下。</p>
+<p><table border="1" cellspacing="0" cellpadding="0"></table></p>
+<p><tbody></tbody></p>
+<p><tr></tr></p>
+<td valign="top" width="71">
+
+<p>bit 7</p>
+<p></p></td><p></p>
+<p><td valign="top" width="71">bit 6</td></p>
+<p><td valign="top" width="71">bit 5</td></p>
+<p><td valign="top" width="71">bit 4</td></p>
+<p><td valign="top" width="71">bit 3</td></p>
+<p><td valign="top" width="71">bit 2</td></p>
+<p><td valign="top" width="71">bit 1</td></p>
+<p><td valign="top" width="71">bit 0</td><br></p>
+<p><tr></tr></p>
+<td colspan="8" valign="top" width="568">
+
+<p><strong>0xAA</strong></p>
+<p></p></td><br><p></p>
+<p><tr></tr></p>
+<td colspan="8" valign="top" width="568">
+
+<p><strong>0xAA</strong></p>
+<p></p></td><br><p></p>
+<p><tr></tr></p>
+<td colspan="4" valign="top" width="284">
+
+<p>目标数据端口 Port</p>
+<p>例：Log=5; Commander= 3 ; Parameters=2</p>
+<p></p></td><p></p>
+<td colspan="2" valign="top" width="142">
+
+<p>Res</p>
+<p>保留</p>
+<p></p></td><p></p>
+<td colspan="2" valign="top" width="142">
+
+<p>目标通道 Channel</p>
+<p> <wbr></p>
+<p></p></td><br><p></p>
+<p><tr></tr></p>
+<td colspan="8" valign="top" width="568">
+
+<p><strong>Packet length <wbr></strong> <strong>数据字节长度（**</strong>DATA<strong>**长度）</strong></p>
+<p></p></td><br><p></p>
+<p><tr></tr></p>
+<td colspan="8" valign="top" width="568">
+
+<p>DATA 0</p>
+<p></p></td><br><p></p>
+<p><tr></tr></p>
+<td colspan="8" valign="top" width="568">
+
+<p>DATA1</p>
+<p></p></td><br><p></p>
+<p><tr></tr></p>
+<td colspan="8" valign="top" width="568">
+
+<p>…</p>
+<p></p></td><br><p></p>
+<p><tr></tr></p>
+<td colspan="8" valign="top" width="568">
+
+<p>…</p>
+<p></p></td><br><p></p>
+<p><tr></tr></p>
+<td colspan="8" valign="top" width="568">
+
+<p>DATA30</p>
+<p></p></td><br><p></p>
+<p><tr></tr></p>
+<td colspan="8" valign="top" width="568">
+
+<p><strong>Cksum</strong> <strong>校验码</strong></p>
+<p></p></td><br><br><br><br><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> 进一步的解释如下：<p></p>
+<p><table border="1" cellspacing="0" cellpadding="0"></table></p>
+<p><tbody></tbody></p>
+<p><tr></tr></p>
+<p><td valign="top" width="77">0xAA</td></p>
+<p><td valign="top" width="78">0xAA</td></p>
+<p><td valign="top" width="79">Header</td></p>
+<p>数据头</p>
+<p><td valign="top" width="79">Length</td></p>
+<p>数据长度</p>
+<p><td valign="top" width="103">Data0…………………….Data30</td></p>
+<p><td valign="top" width="78">Cksum</td><br><br><br><br><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> 举例如下：</p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> 例1：Commander命令：</p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr>  <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> 0xaa 0xaa <strong><u>0x30</u></strong> <u><strong>0x0e</strong></u> 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x3e</p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> 其中：<strong><u>0x30</u></strong>表示Commander命令；<strong><u>0x0e</u></strong>表示数据长度为14字节。</p>
+<p><wbr></p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> 例2：数据链路ping指令（类似以太网ping指令）</p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr>  <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> –&gt; <wbr> <wbr> 0xaa 0xaa <strong><u>0xf0</u></strong> <u><strong>0x01</strong></u> 0x01 0xf2 <wbr> <wbr> <wbr> <wbr> # Sent to the copter  <wbr>发往copter飞行器</p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr>  <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> &lt;– <wbr> <wbr> 0xaa 0xaa 0xf0 0x01 0x01 0xf2 <wbr> <wbr> <wbr> <wbr> # Received from the copter 接收自飞行器</p>
+<p><wbr> <wbr> <wbr> <wbr> <wbr> <wbr> <wbr> 其中<strong><u>0xf0</u></strong>表示用于控制和访问通信链路层的link layer数据端口命令。<strong><u>0x01</u></strong>表示数据长度1个字节。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/crazyflie/" rel="tag"># crazyflie</a>
+          
+            <a href="/tags/quadcoptor/" rel="tag"># quadcoptor</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/11047.html" rel="next" title="【转】Crazyflie笔记四：eclipse编译、开发环境搭建">
+                <i class="fa fa-chevron-left"></i> 【转】Crazyflie笔记四：eclipse编译、开发环境搭建
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/43858.html" rel="prev" title="crazyflie-client安装及PC端python开发环境的搭建">
+                crazyflie-client安装及PC端python开发环境的搭建 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpeg"
+                alt="gwiily" />
+            
+              <p class="site-author-name" itemprop="name">gwiily</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-CRTP通信包"><span class="nav-number">1.</span> <span class="nav-text">7.1 CRTP通信包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、数据通道"><span class="nav-number">1.1.</span> <span class="nav-text">1、数据通道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、数据端口"><span class="nav-number">1.2.</span> <span class="nav-text">2、数据端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、CRTP通信包的结构"><span class="nav-number">1.3.</span> <span class="nav-text">3、CRTP通信包的结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、物理接口层"><span class="nav-number">1.4.</span> <span class="nav-text">4、物理接口层</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gwiily</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.3.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'EhlEO5zRsi1U0fMnqnVDkXPS-gzGzoHsz',
+        appKey: 'N1969uHW5tAaeGeD2cDBwhO4',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

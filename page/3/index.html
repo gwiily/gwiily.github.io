@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/13145/">
+    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/2535.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gwiily">
@@ -316,7 +316,236 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/posts/13145/" itemprop="url">
+                <a class="post-title-link" href="/posts/2535.html" itemprop="url">
+                  【转】Crazyflie笔记一：概述开发范围、工具、特点介绍
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-06-06 21:12:57" itemprop="dateCreated datePublished" datetime="2016-06-06T21:12:57+08:00">2016-06-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2017-09-05 22:15:33" itemprop="dateModified" datetime="2017-09-05T22:15:33+08:00">2017-09-05</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Quadcopter/" itemprop="url" rel="index"><span itemprop="name">Quadcopter</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Quadcopter/Crazyflie-2-0/" itemprop="url" rel="index"><span itemprop="name">Crazyflie 2.0</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/2535.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/2535.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>原文：<a href="http://blog.sina.com.cn/s/blog_402c071e0102v6ho.html" target="_blank" rel="noopener">http://blog.sina.com.cn/s/blog_402c071e0102v6ho.html</a></p>
+<h2 id="关于Crazyflie开发"><a href="#关于Crazyflie开发" class="headerlink" title="关于Crazyflie开发"></a>关于Crazyflie开发</h2><p>英文参考：<a href="http://www.bitcraze.se/development/" target="_blank" rel="noopener">http://www.bitcraze.se/development/</a></p>
+<h3 id="1、开发范围"><a href="#1、开发范围" class="headerlink" title="1、开发范围"></a>1、开发范围</h3><p>如果你想开发Crazyflie，那你能做些什么呢？下面列举了Crazyflie源码开发所涉及的几个方面，具体包括：</p>
+<p>1、传感器</p>
+<p>Crazyflie飞行器包含不同的传感器，这些都需要信号处理和性能优化。</p>
+<p>2、传感信号融合</p>
+<p>多个传感器的信号输出后，需要融合在一起，才能对Crazyflie飞行器姿态进行预估。</p>
+<p>3、控制理论</p>
+<p>Crazyflie包含了一系列控制闭环，主要都是对roll/pitch/yaw进行控制，也可以通过Kinect外部控制飞行器动作。</p>
+<p>4、遥控通信协议</p>
+<p>通信协议很简单，但也有足够的扩展性。</p>
+<p>5、USB</p>
+<p>支持与PC机USB通信。</p>
+<p>6、实时系统</p>
+<p>采用FREERTOS硬实时系统。</p>
+<p>7、图像处理</p>
+<p>在Kinect控制飞行器飞行时，用到了图像算法来捕捉Crazyflie飞行器的位置。</p>
+<p>8、Android</p>
+<p>采用支持USB OTH/HOST的Android设备可以控制飞行器飞行。</p>
+<p><wbr></p>
+<p>Crazyflie飞行器项目用到的编程语言：</p>
+<p>1、Crazyradio 和Crazyflie固件为C语言开发；</p>
+<p>2、Crazyflie PC API和PC客户端为Python语言开发；</p>
+<p>3、Android客户端为Java语言开发。</p>
+<h3 id="2、工具"><a href="#2、工具" class="headerlink" title="2、工具"></a>2、工具</h3><p>开发环境的设置，一直都是一个麻烦的问题。为了方便，我们提供了一个虚拟机，它包含了所有必须的东西。你需要做的就是下载虚拟机，并导入我们提供的工具。这些工具包括编译器、生成器、EDA软件、固件库、调试工具等。如果一切就绪，你可以做如下事情：</p>
+<p>1、查看、生成、调试Crazyflie固件；</p>
+<p>2、查看、生成Crazyradio固件；</p>
+<p>3、查看Crazyflie 和Crazyradio的EDA工程；</p>
+<p>4、开发PC端应用程序；</p>
+<p>5、控制Crazyflie飞行。</p>
+<h3 id="3、特点"><a href="#3、特点" class="headerlink" title="3、特点"></a>3、特点</h3><p>Crazyflie飞行器的目的是用于开发和试验用的，所以我们提供了一系列的调试与开发工具，特点如下：</p>
+<p>1、通过radio来bootload固件；</p>
+<p>2、通过radio来读取和修改列表参数；</p>
+<p>3、通过radio读取日志数据；</p>
+<p>4、大量CPU空闲时间，大量flash、RAM空间可以利用；</p>
+<p>5、JTAG接口</p>
+<p>6、留有扩展接口</p>
+<p><wbr></p>
+<p>radio bootloader允许Crazyflie通过radio来加载固件，这样可以不用接USB或者JTAG就可以刷新固件。当然Crazyradio适配器上也有USB bootloader来更新固件。</p>
+<p>Crazyflie扩展接口，不仅包含了JTAG，还包含了一系列总线、电源，用于扩展其他硬件。</p>
+<h3 id="4、社区"><a href="#4、社区" class="headerlink" title="4、社区"></a>4、社区</h3><p>1、<strong><u><a href="http://www.github.com/bitcraze" title="Bitcraze Repo at GitHub" target="_blank" rel="noopener">GitHub</a></u></strong>，所有开源文件可以在<a href="https://github.com/bitcraze" target="_blank" rel="noopener">https://github.com/bitcraze</a>查看。</p>
+<p>2、<strong><u> <wbr><a href="http://wiki.bitcraze.se/" title="Bitcraze Wiki" target="_blank" rel="noopener">wiki</a></u></strong> <wbr>，你可以在<a href="http://wiki.bitcraze.se/" target="_blank" rel="noopener">http://wiki.bitcraze.se/</a>查看Crazyflie的文档资料。</p>
+<p>3、<strong><u><a href="http://forum.bitcraze.se/" title="Bitcraze Forum" target="_blank" rel="noopener">forum</a></u></strong>，你可以在<a href="http://forum.bitcraze.se/" target="_blank" rel="noopener">http://forum.bitcraze.se/</a>论坛上参与话题讨论。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/13145.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gwiily">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gwiily's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/posts/13145.html" itemprop="url">
                   解决海马玩无法安装xposed
                 </a>
               
@@ -392,8 +621,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/posts/13145/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/13145/" itemprop="commentCount"></span>
+                <a href="/posts/13145.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/13145.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -477,7 +706,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/30908/">
+    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/30908.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gwiily">
@@ -496,7 +725,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/posts/30908/" itemprop="url">
+                <a class="post-title-link" href="/posts/30908.html" itemprop="url">
                   在模拟器中安装google play版部落冲突
                 </a>
               
@@ -572,8 +801,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/posts/30908/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/30908/" itemprop="commentCount"></span>
+                <a href="/posts/30908.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/30908.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -663,7 +892,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/49738/">
+    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/49738.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gwiily">
@@ -682,7 +911,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/posts/49738/" itemprop="url">
+                <a class="post-title-link" href="/posts/49738.html" itemprop="url">
                   Crazyflie2.0 文件结构
                 </a>
               
@@ -765,8 +994,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/posts/49738/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/49738/" itemprop="commentCount"></span>
+                <a href="/posts/49738.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/49738.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -897,7 +1126,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/27732/">
+    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/27732.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gwiily">
@@ -916,7 +1145,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/posts/27732/" itemprop="url">
+                <a class="post-title-link" href="/posts/27732.html" itemprop="url">
                   双硬盘安装win10+ubuntu 14.04
                 </a>
               
@@ -992,8 +1221,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/posts/27732/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/27732/" itemprop="commentCount"></span>
+                <a href="/posts/27732.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/27732.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1087,7 +1316,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/25349/">
+    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/25349.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gwiily">
@@ -1106,7 +1335,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/posts/25349/" itemprop="url">
+                <a class="post-title-link" href="/posts/25349.html" itemprop="url">
                   解决在使用OPENCV调用摄像头时的报错
                 </a>
               
@@ -1182,8 +1411,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/posts/25349/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/25349/" itemprop="commentCount"></span>
+                <a href="/posts/25349.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/25349.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1273,7 +1502,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/26728/">
+    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/26728.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gwiily">
@@ -1292,7 +1521,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/posts/26728/" itemprop="url">
+                <a class="post-title-link" href="/posts/26728.html" itemprop="url">
                   Crazyflie 2.0 系统结构
                 </a>
               
@@ -1375,8 +1604,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/posts/26728/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/26728/" itemprop="commentCount"></span>
+                <a href="/posts/26728.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/26728.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1495,7 +1724,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/62395/">
+    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/62395.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gwiily">
@@ -1514,7 +1743,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/posts/62395/" itemprop="url">
+                <a class="post-title-link" href="/posts/62395.html" itemprop="url">
                   crazyflie开发入门
                 </a>
               
@@ -1597,8 +1826,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/posts/62395/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/62395/" itemprop="commentCount"></span>
+                <a href="/posts/62395.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/62395.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1728,7 +1957,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/18942/">
+    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/18942.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gwiily">
@@ -1747,7 +1976,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/posts/18942/" itemprop="url">
+                <a class="post-title-link" href="/posts/18942.html" itemprop="url">
                   crazyflie2.0介绍
                 </a>
               
@@ -1830,8 +2059,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/posts/18942/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/18942/" itemprop="commentCount"></span>
+                <a href="/posts/18942.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/18942.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -2000,7 +2229,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/53711/">
+    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/53711.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gwiily">
@@ -2019,7 +2248,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/posts/53711/" itemprop="url">
+                <a class="post-title-link" href="/posts/53711.html" itemprop="url">
                   在linux（UBUNTU14.04）中搭建PIXHAWK的仿真平台
                 </a>
               
@@ -2102,8 +2331,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/posts/53711/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/53711/" itemprop="commentCount"></span>
+                <a href="/posts/53711.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/53711.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -2203,237 +2432,6 @@ pxh&amp;gt;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/30380/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="gwiily">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="gwiily's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/posts/30380/" itemprop="url">
-                  pixhawk在linux（ubuntu14.04）下的开发环境搭建及源码编译
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2015-11-25 10:47:37" itemprop="dateCreated datePublished" datetime="2015-11-25T10:47:37+08:00">2015-11-25</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2017-09-05 22:15:33" itemprop="dateModified" datetime="2017-09-05T22:15:33+08:00">2017-09-05</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Quadcopter/" itemprop="url" rel="index"><span itemprop="name">Quadcopter</span></a></span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Quadcopter/PIXHAWK开发/" itemprop="url" rel="index"><span itemprop="name">PIXHAWK开发</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/posts/30380/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/posts/30380/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>参考：<a href="http://dev.px4.io/starting-installing-linux.html" target="_blank" rel="noopener">http://dev.px4.io/starting-installing-linux.html</a></p>
-<p>我使用的是UBUNTU14.04，安装了win10+UBUNTU的双系统，方便在各个系统下的调试开发。</p>
-<p>安装过程官方文档已经说的比较清楚了，安装的时候最好不要挂代理，否则可能会无法下载某些软件和源码。</p>
-<p>（本文仅针对硬件为PIXHAWK的开发环境搭建，其他硬件请参考官方文档）</p>
-<p>第一步：执行以下三条命令</p>
-<blockquote>
-<p>sudo add-apt-repository ppa:george-edison55/cmake-3.x -y<br>sudo apt-get update<br>sudo apt-get install python-argparse git-core wget zip \<br>python-empy qtcreator cmake build-essential -y</p>
-</blockquote>
-<p>第二步：执行以下命令删除串口模式管理器</p>
-<blockquote>
-<p>sudo apt-get remove modemmanager</p>
-</blockquote>
-<p>第三步：执行以下命令更新依赖包：</p>
-<blockquote>
-<p>sudo add-apt-repository ppa:terry.guo/gcc-arm-embedded -y<br>sudo apt-get update<br>sudo apt-get install python-serial openocd \<br>flex bison libncurses5-dev autoconf texinfo build-essential \<br>libftdi-dev libtool zlib1g-dev genromfs \<br>python-empy</p>
-</blockquote>
-<p>第四步：执行以下命令安装相应版本的GCC</p>
-<blockquote>
-<p>sudo apt-get install gcc-arm-none-eabi=4.8.3-18ubuntu2+12 -y<br>（对于老版本的ubuntu，例如Ubuntu 14.04 (Trusty) and 14.10，执行以下命令）<br>sudo apt-get install gcc-arm-none-eabi -y</p>
-</blockquote>
-<p>第五步：更该用户权限，将当前用户添加进组中$USER替换为当前用户：</p>
-<blockquote>
-<p>sudo usermod -a -G dialout $USER</p>
-</blockquote>
-<p>第六步：执行以下命令下载PX4源码</p>
-<blockquote>
-<p>mkdir -p ~/src<br>cd ~/src<br>git clone <a href="https://github.com/PX4/Firmware.git" target="_blank" rel="noopener">https://github.com/PX4/Firmware.git</a></p>
-</blockquote>
-<p>第七步：编译源码</p>
-<blockquote>
-<p>cd Firmware<br>make px4fmu-v2_default</p>
-</blockquote>
-<p>显示以下为编译成功：</p>
-<blockquote>
-<p>[<span class="hljs-number">100</span>%] Linking CXX executable firmware_nuttx<br>    [<span class="hljs-number">100</span>%] Built target firmware_nuttx<br>    Scanning dependencies of target build_firmware_px4fmu-v2<br>    [<span class="hljs-number">100</span>%] Generating nuttx-px4fmu-v2-default.px4<br>    [<span class="hljs-number">100</span>%] Built target build_firmware_px4fmu-v2<br>    `</p>
-</blockquote>
-<p>第八步：上传固件至PIXHAWK</p>
-<blockquote>
-<p>make px4fmu-v2_default upload </p>
-</blockquote>
-<p>显示以下为上传成功：</p>
-<blockquote>
-<p><pre>`Erase  : [====================] <span class="hljs-number">100.0</span>%<br>    Program: [====================] <span class="hljs-number">100.0</span>%<br>    Verify : [====================] <span class="hljs-number">100.0</span>%<br>    Rebooting.<br>    [<span class="hljs-number">100</span>%] Built target upload</pre></p>
-</blockquote>
-<p>上述如有错误，望指正，谢谢。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2485,7 +2483,7 @@ pxh&amp;gt;
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
