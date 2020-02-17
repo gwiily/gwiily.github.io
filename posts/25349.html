@@ -112,7 +112,7 @@
 <meta name="keywords" content="opencv,图像识别">
 <meta property="og:type" content="article">
 <meta property="og:title" content="解决在使用OPENCV调用摄像头时的报错">
-<meta property="og:url" content="https://www.gwiily.com/posts/25349.html">
+<meta property="og:url" content="https://gwiily.com/posts/25349.html">
 <meta property="og:site_name" content="gwiily&#39;s blog">
 <meta property="og:description" content="最近在尝试用OPENCV控制小四轴的飞行，实现小四轴的协同飞行。 在利用OPENCV调用笔记本自带的摄像头的时候遇到kernel.ball的报错（USB外置的摄像头不知道有没有这个问题），谷歌了一番，找到了解决方法。摄像头调用代码如下：">
 <meta property="og:locale" content="default">
@@ -128,7 +128,7 @@
 
 
 
-  <link rel="canonical" href="https://www.gwiily.com/posts/25349.html"/>
+  <link rel="canonical" href="https://gwiily.com/posts/25349.html"/>
 
 
 
@@ -311,7 +311,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/25349.html">
+    <link itemprop="mainEntityOfPage" href="https://gwiily.com/posts/25349.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gwiily">
@@ -435,7 +435,7 @@
 <p>在利用OPENCV调用笔记本自带的摄像头的时候遇到kernel.ball的报错（USB外置的摄像头不知道有没有这个问题），谷歌了一番，找到了解决方法。摄像头调用代码如下：<br><a id="more"></a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#include&amp;lt;opencv\cv.h&amp;gt; </span><br><span class="line">#include&amp;lt;opencv\highgui.h&amp;gt;</span><br><span class="line">using namespace cv;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">Mat image; </span><br><span class="line">VideoCapture cap; </span><br><span class="line">cap.open(0); </span><br><span class="line">namedWindow(&quot;window&quot;,1);</span><br><span class="line">while(1)&#123;</span><br><span class="line">cap&amp;gt;&amp;gt;image; </span><br><span class="line">imshow(&quot;window&quot;,image);</span><br><span class="line">waitKey(33);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>VC++报错如下图：</p>
-<p><a href="http://www.gwiily.com/wordpress/wp-content/uploads/2015/12/QQ截图20151207151740.jpg"><img src="http://www.gwiily.com/wordpress/wp-content/uploads/2015/12/QQ截图20151207151740.jpg" alt="QQ截图20151207151740"></a></p>
+<p><a href="http://www.gwiily.com/wordpress/wp-content/uploads/2015/12/QQ截图20151207151740.jpg" target="_blank" rel="noopener"><img src="http://www.gwiily.com/wordpress/wp-content/uploads/2015/12/QQ截图20151207151740.jpg" alt="QQ截图20151207151740"></a></p>
 <p>在cap.open(0);语句后面加上Sleep(1000);注意大小写，在头文件中添加#include&lt;window.h&gt;;修改后的代码如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#include&amp;lt;opencv\cv.h&amp;gt;</span><br><span class="line">#include&amp;lt;opencv\highgui.h&amp;gt;</span><br><span class="line">#include &amp;lt;windows.h&amp;gt;</span><br><span class="line">using namespace cv;</span><br><span class="line">int main()&#123;</span><br><span class="line">Mat image;</span><br><span class="line">VideoCapture cap;</span><br><span class="line">cap.open(0);</span><br><span class="line">Sleep(1000);</span><br><span class="line">namedWindow(&quot;window&quot;,1); </span><br><span class="line">while(1)&#123;</span><br><span class="line">cap&amp;gt;&amp;gt;image;</span><br><span class="line">imshow(&quot;window&quot;,image);</span><br><span class="line">waitKey(33);</span><br><span class="line">&#125;&#125;</span><br></pre></td></tr></table></figure>
 

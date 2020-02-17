@@ -112,7 +112,7 @@
 <meta name="keywords" content="web,hexo,博客,https">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hexo+七牛云搭建博客实现全站https访问">
-<meta property="og:url" content="https://www.gwiily.com/posts/65203.html">
+<meta property="og:url" content="https://gwiily.com/posts/65203.html">
 <meta property="og:site_name" content="gwiily&#39;s blog">
 <meta property="og:description" content="前情之前使用github pages搭建的博客，实在难以忍受访问速度。看到有博主用阿里云oss托管静态页面，所以我先用阿里云oss尝试了一下，发现阿里云oss不支持子目录下的index页面的访问，由于hexo编译生成的网站都是目录访问的伪静态，虽然可以通过修改hexo的配置文件实现静态访问，但仍然有部分页面无法修改。尝试使用七牛云存储托管，所有页面均可正常访问，并且资费也比阿里云便宜。">
 <meta property="og:locale" content="default">
@@ -126,7 +126,7 @@
 
 
 
-  <link rel="canonical" href="https://www.gwiily.com/posts/65203.html"/>
+  <link rel="canonical" href="https://gwiily.com/posts/65203.html"/>
 
 
 
@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.gwiily.com/posts/65203.html">
+    <link itemprop="mainEntityOfPage" href="https://gwiily.com/posts/65203.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gwiily">
@@ -451,11 +451,11 @@
 </li>
 </ol>
 <h1 id="域名及CDN配置"><a href="#域名及CDN配置" class="headerlink" title="域名及CDN配置"></a>域名及CDN配置</h1><ol>
-<li>在七牛的bucket控制台中绑定域名，类型www，加速域名<a href="http://www.gwiily.com">www.gwiily.com</a> ，这种设置的缺点是输入gwiily.com后无法解析该域名。覆盖范围选全球，通信协议选https，然后去SSL证书管理中申请免费的SSL证书。使用场景图片小文件，源站配置选择文件存储的bucket，缓存设置为1天。配置好后等待2-3小时，会得到CNAME解析的目标域名。</li>
+<li>在七牛的bucket控制台中绑定域名，类型www，加速域名<a href="http://www.gwiily.com" target="_blank" rel="noopener">www.gwiily.com</a> ，这种设置的缺点是输入gwiily.com后无法解析该域名。覆盖范围选全球，通信协议选https，然后去SSL证书管理中申请免费的SSL证书。使用场景图片小文件，源站配置选择文件存储的bucket，缓存设置为1天。配置好后等待2-3小时，会得到CNAME解析的目标域名。</li>
 <li>在解析服务商中将域名的CNAME类型解析到上步给出的域名。等待解析完成。</li>
 <li>强制https访问，只完成以上步骤访问网站时默认访问的是http协议，在工单中提交强制https访问的申请，七牛客服会在后台将网站访问设置为强制https访问。</li>
 </ol>
-<h1 id="阿里云OSS相关配置"><a href="#阿里云OSS相关配置" class="headerlink" title="阿里云OSS相关配置"></a>阿里云OSS相关配置</h1><p>这里简单说一下阿里云的相关配置，可以基本实现hexo的托管。相关内容参考<a href="https://tianshuang.me/2016/01/%E5%85%B3%E4%BA%8E%E6%AD%A4%E5%8D%9A%E5%AE%A2/index.html" target="_blank" rel="noopener">此处</a>。<br>阿里云上传可以使用[这个脚本(<a href="https://github.com/tianshuang/aliyun-oss-sync)，python3的环境，稍微配置一下就可以使用了。" target="_blank" rel="noopener">https://github.com/tianshuang/aliyun-oss-sync)，python3的环境，稍微配置一下就可以使用了。</a><br>阿里云OSS的静态网站的托管中只支持首页的index访问，子目录中index.html无法默认访问，URL访问必须精确到文件，比如：<a href="http://www.gwiily.com/pages/index.html">www.gwiily.com/pages/index.html</a> 。解决方法就是修改hexo的配置文件，给每个URL添加index.html的后缀。</p>
+<h1 id="阿里云OSS相关配置"><a href="#阿里云OSS相关配置" class="headerlink" title="阿里云OSS相关配置"></a>阿里云OSS相关配置</h1><p>这里简单说一下阿里云的相关配置，可以基本实现hexo的托管。相关内容参考<a href="https://tianshuang.me/2016/01/%E5%85%B3%E4%BA%8E%E6%AD%A4%E5%8D%9A%E5%AE%A2/index.html" target="_blank" rel="noopener">此处</a>。<br>阿里云上传可以使用[这个脚本(<a href="https://github.com/tianshuang/aliyun-oss-sync)，python3的环境，稍微配置一下就可以使用了。" target="_blank" rel="noopener">https://github.com/tianshuang/aliyun-oss-sync)，python3的环境，稍微配置一下就可以使用了。</a><br>阿里云OSS的静态网站的托管中只支持首页的index访问，子目录中index.html无法默认访问，URL访问必须精确到文件，比如：<a href="http://www.gwiily.com/pages/index.html" target="_blank" rel="noopener">www.gwiily.com/pages/index.html</a> 。解决方法就是修改hexo的配置文件，给每个URL添加index.html的后缀。</p>
 <ol>
 <li><p>修改hexo的配置文件如下。这步操作是给每个文章添加index.html后缀。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root: /</span><br><span class="line">permalink: :year/:month/:day/:title/index.html</span><br><span class="line">permalink_defaults:</span><br></pre></td></tr></table></figure>
