@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="gwiily&#39;s blog">
 <meta property="og:description" content="前情之前使用github pages搭建的博客，实在难以忍受访问速度。看到有博主用阿里云oss托管静态页面，所以我先用阿里云oss尝试了一下，发现阿里云oss不支持子目录下的index页面的访问，由于hexo编译生成的网站都是目录访问的伪静态，虽然可以通过修改hexo的配置文件实现静态访问，但仍然有部分页面无法修改。尝试使用七牛云存储托管，所有页面均可正常访问，并且资费也比阿里云便宜。">
 <meta property="article:published_time" content="2017-09-01T02:16:49.000Z">
-<meta property="article:modified_time" content="2018-07-08T04:54:03.000Z">
+<meta property="article:modified_time" content="2020-02-17T16:01:30.976Z">
 <meta property="article:author" content="gwiily">
 <meta property="article:tag" content="web">
 <meta property="article:tag" content="hexo">
@@ -370,7 +370,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-07-08 12:54:03" itemprop="dateModified" datetime="2018-07-08T12:54:03+08:00">2018-07-08</time>
+                <time title="Modified: 2020-02-18 00:01:30" itemprop="dateModified" datetime="2020-02-18T00:01:30+08:00">2020-02-18</time>
               
             
           </span>
@@ -431,43 +431,31 @@
       
 
       
-        <h1 id="前情"><a href="#前情" class="headerlink" title="前情"></a>前情</h1><p>之前使用github pages搭建的博客，实在难以忍受访问速度。看到有博主用阿里云oss托管静态页面，所以我先用阿里云oss尝试了一下，发现阿里云oss不支持子目录下的index页面的访问，由于hexo编译生成的网站都是目录访问的伪静态，虽然可以通过修改hexo的配置文件实现静态访问，但仍然有部分页面无法修改。尝试使用七牛云存储托管，所有页面均可正常访问，并且资费也比阿里云便宜。<br><a id="more"></a></p>
+        <h1 id="前情"><a href="#前情" class="headerlink" title="前情"></a>前情</h1><p>之前使用github pages搭建的博客，实在难以忍受访问速度。看到有博主用阿里云oss托管静态页面，所以我先用阿里云oss尝试了一下，发现阿里云oss不支持子目录下的index页面的访问，由于hexo编译生成的网站都是目录访问的伪静态，虽然可以通过修改hexo的配置文件实现静态访问，但仍然有部分页面无法修改。尝试使用七牛云存储托管，所有页面均可正常访问，并且资费也比阿里云便宜。</p>
+<a id="more"></a>
 <h1 id="七牛对象存储"><a href="#七牛对象存储" class="headerlink" title="七牛对象存储"></a>七牛对象存储</h1><p>新建一个对象存储空间，访问控制设置为『公开空间』。设定好以后系统会分配一个测试域名，同时也可以绑定自己的域名。<br>上传内容可以手动在页面上传，但是hexo生成的静态文件不可能手动去上传，这里使用七牛的官方工具<a href="https://developer.qiniu.com/kodo/tools/1302/qshell" target="_blank" rel="noopener">qshell</a>，更详细的使用方法请参考官方文档，这里记录一下我使用到的功能。</p>
 <ol>
 <li>下载qshell文件，将其重命名为qshell，方便后续使用，在该目录打开mac的终端，使用<code>chmod +x qshell</code>命令赋予其执行权限。</li>
 <li>然后将qshell加入到环境变量中，使用bash的添加到<code>~/.bashrc</code>中，时候zsh的添加到<code>~/.zshrc</code>中，假设qshell的存放路径为<code>/Users/gwiily/Documents/blog/tools</code> ，写入内容为<code>export PATH=$PATH:Users/gwiily/Documents/blog/tools</code></li>
-<li><p>密钥设置。从七牛的控制面板获取你自己的ak和sk，执行<code>$ qshell account ak sk</code>。该操作完成后会在用户目录下生成配置文件。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ls ~/.qshell/</span><br><span class="line">account.json</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改配置文件如下，强制覆盖所有的文件。upload功能的更多参数的配置请查看<a href="https://github.com/qiniu/qshell/blob/master/docs/qupload.md" target="_blank" rel="noopener">官方文档</a>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   &quot;src_dir&quot;            :   &quot;/Users/gwiily/Documents/blog/public/&quot;,</span><br><span class="line">   &quot;bucket&quot;             :   &quot;xxx&quot;,</span><br><span class="line">   &quot;overwrite&quot;          :   true,</span><br><span class="line">   &quot;check_exists&quot;       :   true,</span><br><span class="line">   &quot;check_hash&quot;         :   true,</span><br><span class="line">   &quot;check_size&quot;         :   true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>上传资源使用<code>qshell qupload [&lt;ThreadCount&gt;] &lt;LocalUploadConfig&gt;</code>命令，更多参数请查看<a href="https://github.com/qiniu/qshell/blob/master/docs/qupload.md" target="_blank" rel="noopener">官方文档</a>。<br>以10线程上传文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ qshell qupload 10 ~/.qshell/upload.conf</span><br></pre></td></tr></table></figure>
-<p>列出bucket中的所有文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ qshell listbucket &lt;Bucket&gt; &lt;ListBucketResultFile&gt;</span><br></pre></td></tr></table></figure>
-<p>删除listbucket中的文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ qshell batchdelete [-force] &lt;Bucket&gt; &lt;KeyListFile&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>进入七牛云控制台即可以看到上传的文件。</p>
-</li>
+<li>密钥设置。从七牛的控制面板获取你自己的ak和sk，执行<code>$ qshell account ak sk</code>。该操作完成后会在用户目录下生成配置文件。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ls ~&#x2F;.qshell&#x2F;</span><br><span class="line">account.json</span><br></pre></td></tr></table></figure></li>
+<li>修改配置文件如下，强制覆盖所有的文件。upload功能的更多参数的配置请查看<a href="https://github.com/qiniu/qshell/blob/master/docs/qupload.md" target="_blank" rel="noopener">官方文档</a>。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   &quot;src_dir&quot;            :   &quot;&#x2F;Users&#x2F;gwiily&#x2F;Documents&#x2F;blog&#x2F;public&#x2F;&quot;,</span><br><span class="line">   &quot;bucket&quot;             :   &quot;xxx&quot;,</span><br><span class="line">   &quot;overwrite&quot;          :   true,</span><br><span class="line">   &quot;check_exists&quot;       :   true,</span><br><span class="line">   &quot;check_hash&quot;         :   true,</span><br><span class="line">   &quot;check_size&quot;         :   true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>上传资源使用<code>qshell qupload [&lt;ThreadCount&gt;] &lt;LocalUploadConfig&gt;</code>命令，更多参数请查看<a href="https://github.com/qiniu/qshell/blob/master/docs/qupload.md" target="_blank" rel="noopener">官方文档</a>。<br>以10线程上传文件：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ qshell qupload 10 ~&#x2F;.qshell&#x2F;upload.conf</span><br></pre></td></tr></table></figure>
+列出bucket中的所有文件：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ qshell listbucket &lt;Bucket&gt; &lt;ListBucketResultFile&gt;</span><br></pre></td></tr></table></figure>
+删除listbucket中的文件：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ qshell batchdelete [-force] &lt;Bucket&gt; &lt;KeyListFile&gt;</span><br></pre></td></tr></table></figure></li>
+<li>进入七牛云控制台即可以看到上传的文件。</li>
 </ol>
 <h1 id="域名及CDN配置"><a href="#域名及CDN配置" class="headerlink" title="域名及CDN配置"></a>域名及CDN配置</h1><ol>
 <li>在七牛的bucket控制台中绑定域名，类型www，加速域名<a href="http://www.gwiily.com" target="_blank" rel="noopener">www.gwiily.com</a> ，这种设置的缺点是输入gwiily.com后无法解析该域名。覆盖范围选全球，通信协议选https，然后去SSL证书管理中申请免费的SSL证书。使用场景图片小文件，源站配置选择文件存储的bucket，缓存设置为1天。配置好后等待2-3小时，会得到CNAME解析的目标域名。</li>
 <li>在解析服务商中将域名的CNAME类型解析到上步给出的域名。等待解析完成。</li>
 <li>强制https访问，只完成以上步骤访问网站时默认访问的是http协议，在工单中提交强制https访问的申请，七牛客服会在后台将网站访问设置为强制https访问。</li>
 </ol>
-<h1 id="阿里云OSS相关配置"><a href="#阿里云OSS相关配置" class="headerlink" title="阿里云OSS相关配置"></a>阿里云OSS相关配置</h1><p>这里简单说一下阿里云的相关配置，可以基本实现hexo的托管。相关内容参考<a href="https://tianshuang.me/2016/01/%E5%85%B3%E4%BA%8E%E6%AD%A4%E5%8D%9A%E5%AE%A2/index.html" target="_blank" rel="noopener">此处</a>。<br>阿里云上传可以使用[这个脚本(<a href="https://github.com/tianshuang/aliyun-oss-sync)，python3的环境，稍微配置一下就可以使用了。" target="_blank" rel="noopener">https://github.com/tianshuang/aliyun-oss-sync)，python3的环境，稍微配置一下就可以使用了。</a><br>阿里云OSS的静态网站的托管中只支持首页的index访问，子目录中index.html无法默认访问，URL访问必须精确到文件，比如：<a href="http://www.gwiily.com/pages/index.html" target="_blank" rel="noopener">www.gwiily.com/pages/index.html</a> 。解决方法就是修改hexo的配置文件，给每个URL添加index.html的后缀。</p>
+<h1 id="阿里云OSS相关配置"><a href="#阿里云OSS相关配置" class="headerlink" title="阿里云OSS相关配置"></a>阿里云OSS相关配置</h1><p>这里简单说一下阿里云的相关配置，可以基本实现hexo的托管。相关内容参考<a href="https://tianshuang.me/2016/01/%E5%85%B3%E4%BA%8E%E6%AD%A4%E5%8D%9A%E5%AE%A2/index.html" target="_blank" rel="noopener">此处</a>。<br>阿里云上传可以使用<a href="https://github.com/tianshuang/aliyun-oss-sync" target="_blank" rel="noopener">这个脚本</a>，python3的环境，稍微配置一下就可以使用了。<br>阿里云OSS的静态网站的托管中只支持首页的index访问，子目录中index.html无法默认访问，URL访问必须精确到文件，比如：<a href="http://www.gwiily.com/pages/index.html" target="_blank" rel="noopener">www.gwiily.com/pages/index.html</a> 。解决方法就是修改hexo的配置文件，给每个URL添加index.html的后缀。</p>
 <ol>
-<li><p>修改hexo的配置文件如下。这步操作是给每个文章添加index.html后缀。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root: /</span><br><span class="line">permalink: :year/:month/:day/:title/index.html</span><br><span class="line">permalink_defaults:</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改next主题的配置文件。这步是修改主页，目录页，归档页，关于页的访问地址。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">  home: /</span><br><span class="line">  categories: /categories/index.html</span><br><span class="line">  archives: /archives/index.html</span><br><span class="line">  tags: /tags/index.html</span><br><span class="line">  about: /about/index.html</span><br></pre></td></tr></table></figure>
-</li>
+<li>修改hexo的配置文件如下。这步操作是给每个文章添加index.html后缀。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root: &#x2F;</span><br><span class="line">permalink: :year&#x2F;:month&#x2F;:day&#x2F;:title&#x2F;index.html</span><br><span class="line">permalink_defaults:</span><br></pre></td></tr></table></figure></li>
+<li>修改next主题的配置文件。这步是修改主页，目录页，归档页，关于页的访问地址。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">  home: &#x2F;</span><br><span class="line">  categories: &#x2F;categories&#x2F;index.html</span><br><span class="line">  archives: &#x2F;archives&#x2F;index.html</span><br><span class="line">  tags: &#x2F;tags&#x2F;index.html</span><br><span class="line">  about: &#x2F;about&#x2F;index.html</span><br></pre></td></tr></table></figure>
+通过以上的操作可以将大部分的页面访问地址后面加上index.html。还有目录页中的子页面无法修改，以及归档页的分页。<br>看<a href="https://tianshuang.me/" target="_blank" rel="noopener">Poison</a>网站的解决办法简单粗暴，直接删除目录页，将归档页的分页参数设置为0。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Pagination</span><br><span class="line">## Set per_page to 0 to disable pagination</span><br><span class="line">per_page: 0</span><br><span class="line">pagination_dir: page</span><br></pre></td></tr></table></figure>
+如果有更好的方案请留言或者发邮件给我。</li>
 </ol>
-<p>通过以上的操作可以将大部分的页面访问地址后面加上index.html。还有目录页中的子页面无法修改，以及归档页的分页。<br>看<a href="https://tianshuang.me/" target="_blank" rel="noopener">Poison</a>网站的解决办法简单粗暴，直接删除目录页，将归档页的分页参数设置为0。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Pagination</span><br><span class="line">## Set per_page to 0 to disable pagination</span><br><span class="line">per_page: 0</span><br><span class="line">pagination_dir: page</span><br></pre></td></tr></table></figure></p>
-<p>如果有更好的方案请留言或者发邮件给我。</p>
 
       
     </div>
