@@ -8,6 +8,7 @@
 
 - type: weibo
   icon: "fa-brands fa-weibo"
+  url: "https://weibo.com/gwiily"
 
 - type: email
   icon: "fas fa-envelope"
