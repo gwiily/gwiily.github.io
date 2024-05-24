@@ -1,5 +1,5 @@
 ---
-title: hello world
+title: Hello World
 date: 2024-05-21 20:47:00 +0800
 categories: [blog]
 tags: [blog, jekyll, github pages]     # TAG names should always be lowercase
