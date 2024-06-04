@@ -88,6 +88,24 @@ pageviews:
 #
 theme_mode:  # [light | dark]
 
+# Jekyll compose settings.
+#
+jekyll_compose:
+  auto_open: true
+  default_front_matter:
+    drafts:
+      description:
+      image:
+      category: [category]
+      tags: [tag1, tag2, tag3]    
+    posts:
+      description:
+      image:
+      category: [category]
+      tags: [tag1, tag2, tag3]
+
+
+
 # The CDN endpoint for media resources.
 # Notice that once it is assigned, the CDN url
 # will be added to all media resources (site avatar, posts' images, audio and video files) paths starting with '/'
